@@ -1,0 +1,362 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cand",
+				"candidate"
+			],
+			[
+				"mod",
+				"ModelEntry"
+			],
+			[
+				"look",
+				"lookup_cam_transform"
+			],
+			[
+				"quce",
+				"query_cluster_center"
+			],
+			[
+				"conf",
+				"confidence"
+			],
+			[
+				"clus",
+				"cluster_center"
+			],
+			[
+				"cons",
+				"consideration_threshold"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/stfn/.bashrc",
+			"settings":
+			{
+				"buffer_size": 4557,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "nodes/mapper.cpp",
+			"settings":
+			{
+				"buffer_size": 1931,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "nodes/detector.cpp",
+			"settings":
+			{
+				"buffer_size": 5315,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 54.0,
+		"selected_items":
+		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"packin",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/stfn/catkin_ws/src/stfn_object_detector"
+	],
+	"file_history":
+	[
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/hs_result_2014_11_13_16_32_42.txt",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/hs_result_2014_11_11_13_55_19.txt",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODDetection.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODDetection.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/detector.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODMapping.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODMapping.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/detect.launch",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/ModelDBStub.hpp",
+		"/media/ssd_ubuntu/home/stfn/.bashrc",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/config/default.yaml",
+		"/home/stfn/dev/hf_mc/evaluations/_scripts/show_best_per_frame.py",
+		"/home/stfn/dev/hf_mc/evaluations/_scripts/helper.py",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/ModelDBStub.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODAlignment.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/aligner2.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/aligner.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/mapper.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/CMakeLists.txt",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODAlignment.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_rl/_finalfeature_gpu/1/test_files/_test_1.cfg",
+		"/home/stfn/testdata/_test_1.txt",
+		"/media/ssd_ubuntu/home/stfn/catkin_ws/src/stfn_object_detector/test/aligner_parameter_optimizer.py",
+		"/media/ssd_ubuntu/home/stfn/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/media/ssd_ubuntu/home/stfn/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/opt/sublime_text/changelog.txt"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"read_hf_mc_candidates",
+			"model",
+			"cout",
+			"x",
+			"cols",
+			"width",
+			"cout",
+			"x2",
+			"x1",
+			"depth_img",
+			"initial_sca",
+			"initial_scale",
+			"resize",
+			"detection_cloud",
+			"addsp",
+			"remove",
+			"x",
+			"std::",
+			"extract_hypothesis_cluster_crop",
+			"extract_hypothesis_cluster_radius",
+			"pub_detection_markers",
+			";\n",
+			"rgb_msg->header",
+			" =",
+			"GODDetection",
+			"Detect",
+			"detect",
+			"	\n",
+			"0"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/stfn/.bashrc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4557,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4533,
+								4533
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1785.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "nodes/mapper.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1931,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								662,
+								662
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "nodes/detector.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5315,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4379,
+								4379
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1581.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "stfn_object_detector.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 229.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

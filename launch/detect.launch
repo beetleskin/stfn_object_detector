@@ -1,0 +1,9 @@
+<launch>
+	<group ns="dhf">
+		<node pkg="stfn_object_detector" type="ros_detector" name="dhf_detector" output="screen">
+			<rosparam file="$(find stfn_object_detector)/launch/config/default.yaml" command="load"/>
+			<remap from="/camera/rgb/image_color" to="/cam3d/rgb/image_rect_color"/>
+			<remap from="/camera/depth/image" to="/cam3d/depth_registered/image_raw"/>
+		</node>
+	</group>
+</launch>

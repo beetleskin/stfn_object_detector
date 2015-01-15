@@ -1,0 +1,6 @@
+<launch>
+	<group ns="dhf">
+		<node pkg="stfn_object_detector" type="ros_mapper" name="dhf_mapper" output="screen">
+		</node>
+	</group>
+</launch>

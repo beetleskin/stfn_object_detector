@@ -1,0 +1,20 @@
+forest_path: '/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_rl/_finalfeature_gpu/1/forest/treetable_'
+num_trees: 15
+off_trees: 0
+p_widht: 10
+p_height: 10
+initial_scale: 0.7
+kernel_smooth: 15
+kernel_vote: 20
+kernel_sigma: 2
+threshold_hierarchy: 1.5
+max_candidates: 20
+detection_threshold: 0.1
+do_backprojection: true
+cand_max_width: 320
+cand_max_height: 240
+
+float: 1234.5
+boolean: true
+list: [1.0, mixed list]
+dictionary: {a: b, c: d}
