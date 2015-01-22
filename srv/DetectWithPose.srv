@@ -1,5 +1,6 @@
 # Request
 int32 NO_LIMIT = -1
+int32 ALL_MODELS = -1
 int32[] model_id
 int32 max_results
 

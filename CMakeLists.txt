@@ -161,7 +161,7 @@ add_executable(detector ${DHF_DIR}/CRForest-Detector.cpp ${DHF_SOURCES})
 add_executable(ros_detector nodes/detector.cpp src/GODDetection.cpp src/GODMapping.cpp ${DHF_SOURCES})
 add_executable(ros_aligner2 nodes/aligner2.cpp src/GODAlignment.cpp)
 add_executable(ros_mapper nodes/mapper.cpp)
-add_executable(ros_detect_with_pose_service src/detect_with_pose_service.cpp ${DHF_SOURCES})
+add_executable(ros_detect_with_pose_service src/GODAlignment.cpp src/GODDetection.cpp src/detect_with_pose_service.cpp ${DHF_SOURCES})
 add_executable(ros_aligner_fitness_checker test/aligner_fitness_checker.cpp src/GODAlignment.cpp)
 
 add_dependencies(ros_detector stfn_object_detector_generate_messages_cpp)

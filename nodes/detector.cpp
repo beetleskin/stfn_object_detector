@@ -153,7 +153,7 @@ int main(int argc, char **argv) {
 
 	// register synced subscribers
 	image_transport::ImageTransport it(nh);
-	image_transport::SubscriberFilter rgb_sub( it, "/camera/rgb/image_color", 1);
+	image_transport::SubscriberFilter rgb_sub( it, "/camera/rgb/image", 1);
 	image_transport::SubscriberFilter depth_sub( it, "/camera/depth/image", 1);
 	message_filters::Synchronizer<MySyncPolicy> sync(MySyncPolicy(10), rgb_sub, depth_sub);
 	sync.registerCallback(bind(&imageCallback, _1, _2 ));
