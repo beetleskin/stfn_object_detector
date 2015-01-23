@@ -6,6 +6,7 @@
 #include <opencv2/highgui/highgui.hpp>
 
 #include <ros/ros.h>
+#include <ros/console.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/CameraInfo.h>
 #include <sensor_msgs/Image.h>
@@ -26,6 +27,17 @@ using namespace boost;
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "aligner_optimization", ros::init_options::AnonymousName);
 
+	// disable cout and cerr and everything
+	ostringstream oss;
+	streambuf* oldCoutStreamBuf = cout.rdbuf();
+	cout.rdbuf( oss.rdbuf() );
+	streambuf* oldCerrStreamBuf = cerr.rdbuf();
+	cerr.rdbuf( oss.rdbuf() );
+	pcl::console::setVerbosityLevel(pcl::console::L_ALWAYS);
+	if( ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Fatal) ) {
+		ros::console::notifyLoggerLevelsChanged();
+	}
+
 	//
 	// init and read parameter
 	int a_numberOfSamples = 3;
@@ -38,21 +50,22 @@ int main(int argc, char **argv) {
 	float nest_radius = 0.01;
 	float fest_radius = 0.025;
 
-	ros::param::get("a_numberOfSamples", a_numberOfSamples);
-	ros::param::get("a_correspondenceRandomness", a_correspondenceRandomness);
-	ros::param::get("a_similarityThreshold", a_similarityThreshold);
-	ros::param::get("a_maxCorrespondenceDistanceMultiplier", a_maxCorrespondenceDistanceMultiplier);
-	ros::param::get("a_inlierFraction", a_inlierFraction);
-	ros::param::get("a_maximumIterations", a_maximumIterations);
-	ros::param::get("vg_leafSize", vg_leafSize);
-	ros::param::get("nest_radius", nest_radius);
-	ros::param::get("fest_radius", fest_radius);
+	ros::param::get("~a_numberOfSamples", a_numberOfSamples);
+	ros::param::get("~a_correspondenceRandomness", a_correspondenceRandomness);
+	ros::param::get("~a_similarityThreshold", a_similarityThreshold);
+	ros::param::get("~a_maxCorrespondenceDistanceMultiplier", a_maxCorrespondenceDistanceMultiplier);
+	ros::param::get("~a_inlierFraction", a_inlierFraction);
+	ros::param::get("~a_maximumIterations", a_maximumIterations);
+	ros::param::get("~vg_leafSize", vg_leafSize);
+	ros::param::get("~nest_radius", nest_radius);
+	ros::param::get("~fest_radius", fest_radius);
+
 
 	sensor_msgs::CameraInfo camera_info_msg;
 	camera_info_msg.K = { {570.3422241210938, 0.0, 319.5, 0.0, 570.3422241210938, 239.5, 0.0, 0.0, 1.0} };
 	string model_file = "/home/stfn/testdata/can_1_cloud.pcd";
 	ros::param::get("~model_file", model_file);
-
+ 
 
 	//
 	// init aligner with parameters
@@ -205,6 +218,7 @@ int main(int argc, char **argv) {
 	}
 
 
+	cout.rdbuf( oldCoutStreamBuf );
 	printf("error:%.5f\n", error);
 
 	return 0;

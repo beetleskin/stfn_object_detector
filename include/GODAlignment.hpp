@@ -26,6 +26,8 @@ using namespace std;
 
 class GODAlignment {
 public:
+	typedef shared_ptr<GODAlignment> Ptr;
+	typedef shared_ptr<GODAlignment const> ConstPtr;
 	GODAlignment(boost::array<double, 9ul> K, bool debug_print=false);
 	~GODAlignment();
 	bool align_cloud_to_model(PointCloudT::Ptr cluster, Eigen::Matrix4f &transformation, PointCloudT::Ptr model_aligned);

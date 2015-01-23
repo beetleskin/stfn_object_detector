@@ -1,4 +1,3 @@
-
 #include "CRForestDetector.hpp"
 #include "CRForest.hpp"
 

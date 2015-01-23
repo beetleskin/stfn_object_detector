@@ -37,13 +37,13 @@ class ObjectiveFunction(ObjectiveFunctionInterface):
     def __init__(self):
         # all variables vary in the range [-100, 100]
         self._lower_bounds = [2, 1, 0, 0.01, 0.01, 100, 0.001, 0.005, 0.005]
-        self._upper_bounds = [50, 200, 5, 10, 0.5, 500000, 0.05, 0.1, 0.1]
+        self._upper_bounds = [50, 200, 1, 10, 0.5, 500000, 0.05, 0.1, 0.1]
         self._variable = [True, True, True, True, True, True, True, True, True]
 
         # define all input parameters
         self._maximize = False  # minimize
         self._max_imp = 50000  # maximum number of improvisations
-        self._hms = 250  # harmony memory size
+        self._hms = 200  # harmony memory size
         self._hmcr = 0.75  # harmony memory considering rate
         self._par = 0.5  # pitch adjusting rate
         self._mpap = 0.5  # maximum pitch adjustment proportion (new parameter defined in pitch_adjustment()) - used for continuous variables only
@@ -59,6 +59,7 @@ class ObjectiveFunction(ObjectiveFunctionInterface):
             "_vg_leafSize:=%.5f" % vector[6],
             "_nest_radius:=%.5f" % vector[7],
             "_fest_radius:=%.5f" % vector[8]])
+
 
         error = float(output.split(":")[-1])
         return error
