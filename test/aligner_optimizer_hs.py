@@ -27,42 +27,30 @@ from pyharmonysearch import ObjectiveFunctionInterface, harmony_search
 import random
 from bisect import bisect_left
 from multiprocessing import cpu_count
-import subprocess
-import datetime
+
+from aligner_evaluator import AlignerEvaluater
 
 
 
 class ObjectiveFunction(ObjectiveFunctionInterface):
 
     def __init__(self):
-        # all variables vary in the range [-100, 100]
-        self._lower_bounds = [2, 1, 0, 0.01, 0.01, 100, 0.001, 0.005, 0.005]
-        self._upper_bounds = [50, 200, 1, 10, 0.5, 500000, 0.05, 0.1, 0.1]
+        self._aEval = AlignerEvaluater();
+        self._lower_bounds = self._aEval.lower_bounds
+        self._upper_bounds = self._aEval.upper_bounds
         self._variable = [True, True, True, True, True, True, True, True, True]
 
         # define all input parameters
         self._maximize = False  # minimize
-        self._max_imp = 50000  # maximum number of improvisations
+        self._max_imp = 10000  # maximum number of improvisations
         self._hms = 200  # harmony memory size
         self._hmcr = 0.75  # harmony memory considering rate
         self._par = 0.5  # pitch adjusting rate
         self._mpap = 0.5  # maximum pitch adjustment proportion (new parameter defined in pitch_adjustment()) - used for continuous variables only
 
+
     def get_fitness(self, vector):
-        output = subprocess.check_output(["rosrun", "stfn_object_detector", "ros_aligner_fitness_checker", 
-            "_a_numberOfSamples:=%.5f" % vector[0],
-            "_a_correspondenceRandomness:=%.5f" % vector[1],
-            "_a_similarityThreshold:=%.5f" % vector[2],
-            "_a_maxCorrespondenceDistanceMultiplier:=%.5f" % vector[3],
-            "_a_inlierFraction:=%.5f" % vector[4],
-            "_a_maximumIterations:=%.5f" % vector[5],
-            "_vg_leafSize:=%.5f" % vector[6],
-            "_nest_radius:=%.5f" % vector[7],
-            "_fest_radius:=%.5f" % vector[8]])
-
-
-        error = float(output.split(":")[-1])
-        return error
+        return self._aEval.evaluate(vector)
 
 
     def get_value(self, i, j=None):
@@ -108,14 +96,12 @@ class ObjectiveFunction(ObjectiveFunctionInterface):
         return self._maximize
 
 
+
 if __name__ == '__main__':
-    start_time = datetime.datetime.now()
     obj_fun = ObjectiveFunction()
-    num_processes = cpu_count() - 1  # use number of logical CPUs - 1 so that I have one available for use
-    #num_processes = 4
+    #num_processes = cpu_count() - 1  # use number of logical CPUs - 1 so that I have one available for use
+    num_processes = 4
     num_iterations = num_processes  # each process does 1 iterations
     results = harmony_search(obj_fun, num_processes, num_iterations)
-    result_output = 'Elapsed time: %s\nBest harmony: %s\nBest fitness: %s' % (results.elapsed_time, results.best_harmony, results.best_fitness)
-    with open('hs_result_%s.txt' % start_time.strftime('%Y_%m_%d_%H_%M_%S'), 'w') as f: 
-        f.write(result_output)
-    print result_output
+
+    aEval.write_results("hs", results.best_harmony, results.best_fitness, -1, results.elapsed_time)

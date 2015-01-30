@@ -101,6 +101,7 @@ public:
 		detector->detect(rgb_image->image, depth_image->image, candidates, boundingboxes);
 		ROS_INFO("found %d detection candidates", (int)candidates.size());
 
+
 		if(candidates.empty()) {
 			return true;
 		}
@@ -116,6 +117,7 @@ public:
 		// align each 2D detection
 		for (int i = 0; i < candidates.size(); ++i) {
 
+			// TODO: regard and handle model ID from the request
 			if(candidates[i][4] != 0)
 				continue;
 

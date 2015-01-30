@@ -15,14 +15,13 @@ using namespace std;
 
 
 
-GODAlignment::GODAlignment(boost::array<double, 9ul> K, bool debug_print) :
-	caminfo_K(K),
-	debug_print(debug_print) {
+GODAlignment::GODAlignment(boost::array<double, 9ul> K) :
+	caminfo_K(K) {
 
 	//
 	// setup pcl pipeline
 	// VoxelGrid
-	vg.setLeafSize(0.01f, 0.01f, 0.01f);
+	vg.setLeafSize(0.02f, 0.02f, 0.02f);
 	// Plane Segmentation
 	seg.setOptimizeCoefficients(true);
 	seg.setModelType(pcl::SACMODEL_PLANE);
@@ -30,19 +29,19 @@ GODAlignment::GODAlignment(boost::array<double, 9ul> K, bool debug_print) :
 	seg.setMaxIterations(100);
 	seg.setDistanceThreshold(0.02);
 	// Feature Esitmation
-	fest.setRadiusSearch(0.025);
+	fest.setRadiusSearch(0.079);
 	// Normal Estimation
-	nest.setRadiusSearch(0.015);
+	nest.setRadiusSearch(0.0138);
 	pcl::search::KdTree<PointT>::Ptr tree (new pcl::search::KdTree<PointT> ());
 	nest.setSearchMethod(tree);
 
 	// aligner
-	align.setNumberOfSamples(3); // Number of points to sample for generating/prerejecting a pose
-	align.setCorrespondenceRandomness(50); // Number of nearest features to use
-	align.setSimilarityThreshold(0.5f); // Polygonal edge length similarity threshold
-	align.setMaxCorrespondenceDistance(0.3f * vg.getLeafSize()[0]); // Set inlier threshold
-	align.setInlierFraction(0.05f); // Set required inlier fraction
-	align.setMaximumIterations(50000);
+	align.setNumberOfSamples(19); // Number of points to sample for generating/prerejecting a pose
+	align.setCorrespondenceRandomness(21); // Number of nearest features to use
+	align.setSimilarityThreshold(0.25f); // Polygonal edge length similarity threshold
+	align.setMaxCorrespondenceDistance(0.8f * vg.getLeafSize()[0]); // Set inlier threshold
+	align.setInlierFraction(0.35f); // Set required inlier fraction
+	align.setMaximumIterations(40000);
 
 	this->scene.reset(new PointCloudT);
 }
@@ -89,25 +88,24 @@ bool GODAlignment::align_cloud_to_model(PointCloudT::Ptr cluster, Eigen::Matrix4
 
 		transformation = align.getFinalTransformation();
 
-		if (debug_print) {
-			pcl::console::print_info("\t    | %6.3f %6.3f %6.3f | \n", transformation(0, 0), transformation(0, 1), transformation(0, 2));
-			pcl::console::print_info("\tR = | %6.3f %6.3f %6.3f | \n", transformation(1, 0), transformation(1, 1), transformation(1, 2));
-			pcl::console::print_info("\t    | %6.3f %6.3f %6.3f | \n", transformation(2, 0), transformation(2, 1), transformation(2, 2));
-			pcl::console::print_info("\n");
-			pcl::console::print_info("\tt = < %0.3f, %0.3f, %0.3f >\n", transformation(0, 3), transformation(1, 3), transformation(2, 3));
-			pcl::console::print_info("\n");
-			pcl::console::print_info("\tInliers: %i/%i = %f\n", align.getInliers().size(), this->model->size(), (float)align.getInliers().size() / this->model->size() * 100);
-			pcl::console::print_info("\tScore: %i/%i = %f\n", align.getInliers().size(), this->model->size(), (float)align.getInliers().size() / this->model->size() * 100);
-		}
+		ROS_INFO("\tAlignment successful.");
+		ROS_INFO("\t    | %6.3f %6.3f %6.3f | \n", transformation(0, 0), transformation(0, 1), transformation(0, 2));
+		ROS_INFO("\tR = | %6.3f %6.3f %6.3f | \n", transformation(1, 0), transformation(1, 1), transformation(1, 2));
+		ROS_INFO("\t    | %6.3f %6.3f %6.3f | \n", transformation(2, 0), transformation(2, 1), transformation(2, 2));
+		ROS_INFO("\n");
+		ROS_INFO("\tt = < %0.3f, %0.3f, %0.3f >\n", transformation(0, 3), transformation(1, 3), transformation(2, 3));
+		ROS_INFO("\n");
+		ROS_INFO("\tInliers: %i/%i = %f\n", align.getInliers().size(), this->model->size(), (float)align.getInliers().size() / this->model->size() * 100);
+		ROS_INFO("\tScore: %i/%i = %f\n", align.getInliers().size(), this->model->size(), (float)align.getInliers().size() / this->model->size() * 100);
 
 		return true;
 
 	} else {
-		ROS_WARN("\tAlignment failed!");
+		ROS_INFO("\tAlignment failed!");
 		return false;
 	}
 
-	ROS_DEBUG("\ttime consumed: %0.3fs", t1.getTimeSeconds());
+	ROS_INFO("\ttime consumed: %0.3fs", t1.getTimeSeconds());
 }
 
 

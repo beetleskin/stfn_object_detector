@@ -53,9 +53,8 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 # custom PCL
-#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "/home/stfn/libs/pcl/build/")
-#set(PCL_DIR "/home/stfn/libs/pcl/build/")
 #find_package(PCL 1.8.0 REQUIRED)
+#link_directories(${PCL_LIBRARY_DIRS})
 
 
 ## System dependencies are found with CMake's conventions
@@ -144,6 +143,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(include)
 include_directories(
+#	${PCL_INCLUDE_DIRS}
 	${EIGEN_INCLUDE_DIRS}
 	${OpenCV_INCLUDE_DIRS}
 	${catkin_INCLUDE_DIRS}
@@ -208,6 +208,7 @@ target_link_libraries(ros_detect_with_pose_service
 )
 
 target_link_libraries(ros_aligner_fitness_checker
+#	${PCL_LIBS}
 	${catkin_LIBRARIES}
 	libvtkCommon.so
 	libvtkFiltering.so

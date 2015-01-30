@@ -27,6 +27,8 @@ using namespace boost;
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "aligner_optimization", ros::init_options::AnonymousName);
 
+
+#ifndef DEBUG
 	// disable cout and cerr and everything
 	ostringstream oss;
 	streambuf* oldCoutStreamBuf = cout.rdbuf();
@@ -37,6 +39,7 @@ int main(int argc, char **argv) {
 	if( ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Fatal) ) {
 		ros::console::notifyLoggerLevelsChanged();
 	}
+#endif	
 
 	//
 	// init and read parameter
@@ -131,8 +134,9 @@ int main(int argc, char **argv) {
 	//
 	// do the alignment
 	float error = 0;
+	int runs = 0;
 	int skip = (vec_pose.size() >= 10)? vec_pose.size()/10 : 1;
-	for (int i = 0; i < vec_pose.size(); i+=skip) {
+	for (int i = 0; i < vec_pose.size(); i+=skip, ++runs) {
 		Mat &rgb_img = vec_rgb[i];
 		Mat &depth_img = vec_depth[i];
 		depth_img.convertTo(depth_img, CV_32FC1);
@@ -181,45 +185,83 @@ int main(int argc, char **argv) {
 		pcl::StopWatch t1;
 		bool success = aligner.align_cloud_to_model(cluster_cloud, pose_prediction_mat, model_aligned);
 
+		float error_alignment = 0;
+		float error_time = 0;
 		if (success) {
 			pose_prediction = Eigen::Affine3f(pose_prediction_mat);
-			//pose_prediction.rotate(t_model_init.rotation().inverse());
-
+			// calculate translational error
 			float off_trans = (pose_prediction.translation() - pose_groundtruth.translation()).norm();
-			Eigen::AngleAxisf off_rot(pose_groundtruth.rotation().inverse()*pose_prediction.rotation());
-			Eigen::Vector3f off_rot_err = (off_rot.axis() * off_rot.angle()).cwiseAbs();
-			// create error
-			error += 5 * off_trans + off_rot_err[0] + off_rot_err[1] + off_rot_err[2] / 10.f + t1.getTimeSeconds() / 2;
+			// calculate rotational error
+			// rotaion-matrix == unit vectors! das hier drüber is also überflüssig ... einfach die spalten auslesen. hui.
+			// ggf. noch mehr metriken also diese 3 abstände?
+			float off_rot_x = (pose_prediction * Eigen::Vector4f::UnitX()- pose_groundtruth * Eigen::Vector4f::UnitX()).norm();
+			float off_rot_y = (pose_prediction * Eigen::Vector4f::UnitY()- pose_groundtruth * Eigen::Vector4f::UnitY()).norm();
+			float off_rot_z = (pose_prediction * Eigen::Vector4f::UnitZ()- pose_groundtruth * Eigen::Vector4f::UnitZ()).norm();
+			
+			error_alignment = off_trans*100 + off_rot_x/10 + off_rot_y/10 + off_rot_z*2;
+#ifdef DEBUG
+			cout << "err trans: " << off_trans << endl;
+			cout << "err rot: " << off_rot_x << " " << off_rot_y << " " << off_rot_z << " " << endl;
+#endif
+
 		} else {
-			error += 50.0 + t1.getTimeSeconds() / 2;
+			error_alignment = 50;
 		}
 
 
+		error_time = t1.getTimeSeconds();
+		error += error_alignment + error_time/2;
+
 #ifdef DEBUG
+		cout << "err time: " << error_time << endl;
+		cout << "err total: " << error << endl;
+		cout << endl;
+#endif
+
+
+#ifdef DEBUG
+		// load model
 		pcl::PointCloud<pcl::PointXYZ>::Ptr model(new pcl::PointCloud<pcl::PointXYZ>);
 		if (pcl::io::loadPCDFile<pcl::PointXYZ>("/home/stfn/testdata/can_1_cloud.pcd", *model) < 0) {
 			ROS_ERROR("Error loading model object file!");
 			return -1;
 		}
+
+		// clean scene
 		visu.removeAllShapes();
 		visu.removeAllPointClouds();
+		visu.removeCoordinateSystem("OO");
+		visu.removeCoordinateSystem("pose_groundtruth");
+		visu.removeCoordinateSystem("pose_prediction");
+
+
+		// add stuff
 		cloud->is_dense = false;
 		visu.addPointCloud<PointT>(cloud, pcl::visualization::PointCloudColorHandlerRGBField<PointT>(cloud), "scene");
 		visu.addPointCloud<pcl::PointXYZ>(model, pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ>(model, 255, 0, 0), "model");
 		
-		visu.addCoordinateSystem(0.1);
-		visu.addCoordinateSystem(0.15, pose_groundtruth);
-		visu.addCoordinateSystem(0.15, pose_prediction);
+
+		visu.addCoordinateSystem(0.1, "OO");
+		visu.addCoordinateSystem(0.15, pose_groundtruth, "pose_groundtruth");
+		visu.addCoordinateSystem(0.15, pose_prediction, "pose_prediction");
 
 		visu.addPointCloud<PointT>(cluster_cloud, pcl::visualization::PointCloudColorHandlerCustom<PointT>(cluster_cloud, 0, 255, 0), "cluster");
 		visu.addPointCloud<PointT>(model_aligned,  pcl::visualization::PointCloudColorHandlerCustom<PointT>(model_aligned, 255, 0, 0), "model_aligned");
 		visu.spin(); 
 #endif
+
+		if(error_time > 2)
+			break;
 	}
 
-
+#ifndef DEBUG
+	// reset output buffer to default
 	cout.rdbuf( oldCoutStreamBuf );
-	printf("error:%.5f\n", error);
+#endif
 
+	error /= runs;
+	if(!isfinite(error))
+		error = 50.f;
+	printf("error:%.10f\n", error);
 	return 0;
 }

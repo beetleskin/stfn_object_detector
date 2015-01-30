@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"old",
+				"oldCoutStreamBuf"
+			],
+			[
+				"dete",
+				"detect_with_pose_service"
+			],
+			[
+				"CAli",
+				"catkin_LIBRARIES"
+			],
+			[
+				"rode",
+				"ros_detect_with_pose_service"
+			],
+			[
+				"target",
+				"target_link_libraries"
+			],
+			[
 				"cand",
 				"candidate"
 			],
@@ -36,18 +56,10 @@
 	"buffers":
 	[
 		{
-			"file": "/home/stfn/.bashrc",
+			"file": "src/detect_with_pose_service.cpp",
 			"settings":
 			{
-				"buffer_size": 4557,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "nodes/mapper.cpp",
-			"settings":
-			{
-				"buffer_size": 1931,
+				"buffer_size": 5835,
 				"line_ending": "Unix"
 			}
 		},
@@ -55,7 +67,63 @@
 			"file": "nodes/detector.cpp",
 			"settings":
 			{
-				"buffer_size": 5315,
+				"buffer_size": 5309,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRForest-Detector.cpp",
+			"settings":
+			{
+				"buffer_size": 28055,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "test/aligner_fitness_checker.cpp",
+			"settings":
+			{
+				"buffer_size": 9218,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "launch/detection_service.launch",
+			"settings":
+			{
+				"buffer_size": 450,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 7934,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/aligner_optimizer_pso.py",
+			"settings":
+			{
+				"buffer_size": 203,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "include/GODAlignment.hpp",
+			"settings":
+			{
+				"buffer_size": 1803,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/GODAlignment.cpp",
+			"settings":
+			{
+				"buffer_size": 8708,
 				"line_ending": "Unix"
 			}
 		}
@@ -63,9 +131,13 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 54.0,
+		"height": 327.0,
 		"selected_items":
 		[
+			[
+				"pali",
+				"Package Control: List Packages"
+			],
 			[
 				"insta",
 				"Package Control: Install Package"
@@ -96,30 +168,64 @@
 	},
 	"expanded_folders":
 	[
-		"/home/stfn/catkin_ws/src/stfn_object_detector"
+		"/home/stfn/catkin_ws/src/stfn_object_detector",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/config",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/msg",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/srv",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test"
 	],
 	"file_history":
 	[
+		"/home/stfn/catkin_ws/src/stfn_object_detector/package.xml",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/detection_service.launch",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/CMakeLists.txt",
+		"/opt/eclipse/eclipse.ini",
+		"/usr/share/applications/eclipse.desktop",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRPatch.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/_codeblocks/CMakeFiles/CMakeOutput.log",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/aligner_fitness_checker.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/align.launch",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/hs_result_2015_01_23_18_55_50.txt",
+		"/home/stfn/harmony_search.py",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/aligner_parameter_optimizer.py",
+		"/home/stfn/Things/Logs/MakerBot-Desktop-2015-01-29_11-50-56.log",
+		"/home/stfn/Things/Profiles/stfn_high/miracle.json",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODAlignment.hpp",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/test/hs_result_2014_11_13_16_32_42.txt",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/test/hs_result_2014_11_11_13_55_19.txt",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODDetection.hpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODDetection.cpp",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/detector.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODMapping.hpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODMapping.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/detect.launch",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/aligner2.cpp",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/include/ModelDBStub.hpp",
-		"/media/ssd_ubuntu/home/stfn/.bashrc",
+		"//home/stfn/Things/Profiles/stfn_high/miracle.json",
+		"/home/stfn/Things/Logs/MakerBot-Desktop-2015-01-23_15-38-06.log",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODDetection.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/.gitignore",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRForest-Detector.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/icp.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/detect.launch",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODMapping.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/aligner.cpp",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/config/default.yaml",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/srv/DetectWithPose.srv",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODDetection.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODAlignment.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/mapper.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/detect_with_pose_service.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODMapping.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/msg/Detection2DArr.msg",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/msg/Detection3D.msg",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/msg/Detection3DArr.msg",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/msg/Detection2D.msg",
+		"/home/stfn/.bashrc",
+		"/var/log/conveyor/conveyord.log",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/hs_result_2014_11_11_13_55_19.txt",
+		"/media/ssd_ubuntu/home/stfn/.bashrc",
 		"/home/stfn/dev/hf_mc/evaluations/_scripts/show_best_per_frame.py",
 		"/home/stfn/dev/hf_mc/evaluations/_scripts/helper.py",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/src/ModelDBStub.hpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODAlignment.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/aligner2.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/aligner.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/mapper.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/CMakeLists.txt",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODAlignment.hpp",
 		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_rl/_finalfeature_gpu/1/test_files/_test_1.cfg",
 		"/home/stfn/testdata/_test_1.txt",
 		"/media/ssd_ubuntu/home/stfn/catkin_ws/src/stfn_object_detector/test/aligner_parameter_optimizer.py",
@@ -143,6 +249,24 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"addcoo",
+			"cout",
+			"1000",
+			"caminfo_K",
+			"pcl::console::print_info",
+			"debug_print",
+			"candidates",
+			"harmony_sea",
+			"run",
+			"err",
+			"cout",
+			"aligner->",
+			"infi",
+			"save",
+			"ros",
+			"aligner2",
+			"servi",
+			"detection2d",
 			"read_hf_mc_candidates",
 			"model",
 			"cout",
@@ -189,52 +313,110 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 6,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/home/stfn/.bashrc",
+					"file": "src/detect_with_pose_service.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4557,
+						"buffer_size": 5835,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4533,
-								4533
+								4637,
+								4637
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1785.0,
+						"translation.y": 2320.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "nodes/mapper.cpp",
+					"file": "nodes/detector.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1931,
+						"buffer_size": 5309,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								662,
-								662
+								3517,
+								3517
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1385.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRForest-Detector.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 28055,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10806,
+								10806
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5125.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "test/aligner_fitness_checker.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9218,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								287,
+								287
 							]
 						],
 						"settings":
@@ -246,24 +428,139 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "nodes/detector.cpp",
+					"buffer": 4,
+					"file": "launch/detection_service.launch",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5315,
+						"buffer_size": 450,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4379,
-								4379
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "CMakeLists.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7934,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4729,
+								4729
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CMake/CMake.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1938.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "test/aligner_optimizer_pso.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 203,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								139,
+								139
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "include/GODAlignment.hpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1803,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								339,
+								339
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 306.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/GODAlignment.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8708,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								406,
+								406
 							]
 						],
 						"settings":
@@ -272,10 +569,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1581.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
@@ -287,7 +584,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 33.0
 	},
 	"layout":
 	{
@@ -354,7 +651,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 229.0,
+	"side_bar_width": 275.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

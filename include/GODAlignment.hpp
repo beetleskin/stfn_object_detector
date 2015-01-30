@@ -28,7 +28,7 @@ class GODAlignment {
 public:
 	typedef shared_ptr<GODAlignment> Ptr;
 	typedef shared_ptr<GODAlignment const> ConstPtr;
-	GODAlignment(boost::array<double, 9ul> K, bool debug_print=false);
+	GODAlignment(boost::array<double, 9ul> K);
 	~GODAlignment();
 	bool align_cloud_to_model(PointCloudT::Ptr cluster, Eigen::Matrix4f &transformation, PointCloudT::Ptr model_aligned);
 	void extract_hypothesis_cluster_crop(PointCloudT::Ptr &coud_clip, int off_x, int off_y, int width, int height);
@@ -39,7 +39,6 @@ public:
 	void setInputCloud(PointCloudT::Ptr inputCloud);
 
 public:
-	bool debug_print;
 	PointCloudT::Ptr model;
 	FeatureCloudT::Ptr model_features;
 	PointCloudT::Ptr scene;
