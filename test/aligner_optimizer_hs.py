@@ -27,6 +27,7 @@ from pyharmonysearch import ObjectiveFunctionInterface, harmony_search
 import random
 from bisect import bisect_left
 from multiprocessing import cpu_count
+import sys
 
 from aligner_evaluator import AlignerEvaluater
 
@@ -34,7 +35,7 @@ from aligner_evaluator import AlignerEvaluater
 
 class ObjectiveFunction(ObjectiveFunctionInterface):
 
-    def __init__(self):
+    def __init__(self, iterations=3000):
         self._aEval = AlignerEvaluater();
         self._lower_bounds = self._aEval.lower_bounds
         self._upper_bounds = self._aEval.upper_bounds
@@ -42,7 +43,7 @@ class ObjectiveFunction(ObjectiveFunctionInterface):
 
         # define all input parameters
         self._maximize = False  # minimize
-        self._max_imp = 10000  # maximum number of improvisations
+        self._max_imp = iterations  # maximum number of improvisations
         self._hms = 200  # harmony memory size
         self._hmcr = 0.75  # harmony memory considering rate
         self._par = 0.5  # pitch adjusting rate
@@ -98,10 +99,13 @@ class ObjectiveFunction(ObjectiveFunctionInterface):
 
 
 if __name__ == '__main__':
-    obj_fun = ObjectiveFunction()
+    iterations = 1000
+    if len(sys.argv) > 1:
+        iterations = int(sys.argv[1])
+    obj_fun = ObjectiveFunction(iterations)
     #num_processes = cpu_count() - 1  # use number of logical CPUs - 1 so that I have one available for use
     num_processes = 4
     num_iterations = num_processes  # each process does 1 iterations
     results = harmony_search(obj_fun, num_processes, num_iterations)
 
-    aEval.write_results("hs", results.best_harmony, results.best_fitness, -1, results.elapsed_time)
+    obj_fun._aEval.write_results("hs", results.best_harmony, results.best_fitness, -1, results.elapsed_time.seconds)

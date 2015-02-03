@@ -1,15 +1,18 @@
 #!/usr/bin/env python
+from aligner_evaluator import AlignerEvaluater
 
 from pybrain.optimization import ParticleSwarmOptimizer
-from aligner_evaluator import AlignerEvaluater
+import sys
 import time
 
 
 
 if __name__ == '__main__':
+	iterations = 1000
+	if len(sys.argv) > 1:
+		iterations = int(sys.argv[1])
 	aEval = AlignerEvaluater()
 	bounds = zip(aEval.lower_bounds, aEval.upper_bounds)
-	iterations = 10000
 	start_time = time.time()
 	optimizer = ParticleSwarmOptimizer(aEval.evaluate, aEval.x0, boundaries=bounds, minimize=True, verbose=True)
 
