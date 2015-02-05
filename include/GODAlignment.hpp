@@ -50,4 +50,7 @@ public:
 
 	boost::array<double, 9ul> caminfo_K;
 	double model_bounding_sphere_r;
+
+private:
+	void initParams();
 };

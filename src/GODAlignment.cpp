@@ -20,30 +20,71 @@ GODAlignment::GODAlignment(boost::array<double, 9ul> K) :
 
 	//
 	// setup pcl pipeline
-	// VoxelGrid
-	vg.setLeafSize(0.02f, 0.02f, 0.02f);
-	// Plane Segmentation
+	pcl::search::KdTree<PointT>::Ptr tree (new pcl::search::KdTree<PointT> ());
+	nest.setSearchMethod(tree);
+
+	this->initParams();
+
+	this->scene.reset(new PointCloudT);
+}
+
+
+void GODAlignment::initParams() {
+
+
+	//
+	// init and read parameter
+
+	float vg_leafSize = 0.01;
+	int numberOfSamples = 3;
+	int correspondenceRandomness = 50;
+	float similarityThreshold = 0.5;
+	float maxCorrespondenceDistanceMultiplier = 0.3;
+	float inlierFraction = 0.05;
+	int maximumIterations = 50000;
+	float nest_radius = 0.01;
+	float fest_radius = 0.025;
+
+
+	ros::param::get("~aligner_leafSize", vg_leafSize);
+	ros::param::get("~aligner_numberOfSamples", numberOfSamples);
+	ros::param::get("~aligner_correspondenceRandomness", correspondenceRandomness);
+	ros::param::get("~aligner_similarityThreshold", similarityThreshold);
+	ros::param::get("~aligner_maxCorrespondenceDistanceMultiplier", maxCorrespondenceDistanceMultiplier);
+	ros::param::get("~aligner_inlierFraction", inlierFraction);
+	ros::param::get("~aligner_maximumIterations", maximumIterations);
+	ros::param::get("~aligner_nest_radius", nest_radius);
+	ros::param::get("~aligner_fest_radius", fest_radius);
+
+
+
+	//
+	// set ros dynamic parameter
+
+	vg.setLeafSize(vg_leafSize, vg_leafSize, vg_leafSize);
+
+	// Number of points to sample for generating/prerejecting a pose
+	align.setNumberOfSamples(numberOfSamples);
+	// Number of nearest features to use
+	align.setCorrespondenceRandomness(correspondenceRandomness);
+	// Polygonal edge length similarity threshold
+	align.setSimilarityThreshold(similarityThreshold);
+	// Set inlier threshold
+	align.setMaxCorrespondenceDistance(maxCorrespondenceDistanceMultiplier * vg.getLeafSize()[0]);
+	// Set required inlier fraction
+	align.setInlierFraction(inlierFraction);
+	// Set number of maximum iterations
+	align.setMaximumIterations(maximumIterations);
+
+	nest.setRadiusSearch(nest_radius);
+
+	fest.setRadiusSearch(fest_radius);
+
 	seg.setOptimizeCoefficients(true);
 	seg.setModelType(pcl::SACMODEL_PLANE);
 	seg.setMethodType(pcl::SAC_RANSAC);
 	seg.setMaxIterations(100);
 	seg.setDistanceThreshold(0.02);
-	// Feature Esitmation
-	fest.setRadiusSearch(0.079);
-	// Normal Estimation
-	nest.setRadiusSearch(0.0138);
-	pcl::search::KdTree<PointT>::Ptr tree (new pcl::search::KdTree<PointT> ());
-	nest.setSearchMethod(tree);
-
-	// aligner
-	align.setNumberOfSamples(19); // Number of points to sample for generating/prerejecting a pose
-	align.setCorrespondenceRandomness(21); // Number of nearest features to use
-	align.setSimilarityThreshold(0.25f); // Polygonal edge length similarity threshold
-	align.setMaxCorrespondenceDistance(0.8f * vg.getLeafSize()[0]); // Set inlier threshold
-	align.setInlierFraction(0.35f); // Set required inlier fraction
-	align.setMaximumIterations(40000);
-
-	this->scene.reset(new PointCloudT);
 }
 
 

@@ -18,15 +18,15 @@ class AlignerEvaluater(object):
 
 	def evaluate(self, params):
 		cmd = ["rosrun", "stfn_object_detector", "ros_aligner_fitness_checker", 
-				"_a_numberOfSamples:=%.5f" % params[0],
-				"_a_correspondenceRandomness:=%.5f" % params[1],
-				"_a_similarityThreshold:=%.5f" % params[2],
-				"_a_maxCorrespondenceDistanceMultiplier:=%.5f" % params[3],
-				"_a_inlierFraction:=%.5f" % params[4],
-				"_a_maximumIterations:=%.5f" % params[5],
-				"_vg_leafSize:=%.5f" % params[6],
-				"_nest_radius:=%.5f" % params[7],
-				"_fest_radius:=%.5f" % params[8]]
+				"_aligner_numberOfSamples:=%.5f" % params[0],
+				"_aligner_correspondenceRandomness:=%.5f" % params[1],
+				"_aligner_similarityThreshold:=%.5f" % params[2],
+				"_aligner_maxCorrespondenceDistanceMultiplier:=%.5f" % params[3],
+				"_aligner_inlierFraction:=%.5f" % params[4],
+				"_aligner_maximumIterations:=%.5f" % params[5],
+				"_aligner_vg_leafSize:=%.5f" % params[6],
+				"_aligner_nest_radius:=%.5f" % params[7],
+				"_aligner_fest_radius:=%.5f" % params[8]]
 
 		def target():
 			self.process = subprocess.Popen(cmd, stdout=subprocess.PIPE)

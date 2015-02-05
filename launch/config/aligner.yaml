@@ -1,0 +1,9 @@
+aligner_leafSize: 0.011498947726128904
+aligner_numberOfSamples: 2.9898628316217106
+aligner_correspondenceRandomness: 48.536053085873313
+aligner_similarityThreshold: 0.47169384901785222
+aligner_maxCorrespondenceDistanceMultiplier: -0.5152022518585081
+aligner_inlierFraction: 0.17837353431212649
+aligner_maximumIterations: 50003.238245081484
+aligner_nest_radius: 2.7985686702750261
+aligner_fest_radius: -15.608221815913582

@@ -13,8 +13,3 @@ detection_threshold: 0.1
 do_backprojection: true
 cand_max_width: 320
 cand_max_height: 240
-
-float: 1234.5
-boolean: true
-list: [1.0, mixed list]
-dictionary: {a: b, c: d}

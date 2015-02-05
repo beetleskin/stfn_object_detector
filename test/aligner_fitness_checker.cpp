@@ -1,3 +1,4 @@
+//#define DEBUG
 #include "GODAlignment.hpp"
 #include "myutils.hpp"
 
@@ -41,28 +42,6 @@ int main(int argc, char **argv) {
 	}
 #endif	
 
-	//
-	// init and read parameter
-	int a_numberOfSamples = 3;
-	int a_correspondenceRandomness = 50;
-	float a_similarityThreshold = 0.5;
-	float a_maxCorrespondenceDistanceMultiplier = 0.3;
-	float a_inlierFraction = 0.05;
-	int a_maximumIterations = 50000;
-	float vg_leafSize = 0.01;
-	float nest_radius = 0.01;
-	float fest_radius = 0.025;
-
-	ros::param::get("~a_numberOfSamples", a_numberOfSamples);
-	ros::param::get("~a_correspondenceRandomness", a_correspondenceRandomness);
-	ros::param::get("~a_similarityThreshold", a_similarityThreshold);
-	ros::param::get("~a_maxCorrespondenceDistanceMultiplier", a_maxCorrespondenceDistanceMultiplier);
-	ros::param::get("~a_inlierFraction", a_inlierFraction);
-	ros::param::get("~a_maximumIterations", a_maximumIterations);
-	ros::param::get("~vg_leafSize", vg_leafSize);
-	ros::param::get("~nest_radius", nest_radius);
-	ros::param::get("~fest_radius", fest_radius);
-
 
 	sensor_msgs::CameraInfo camera_info_msg;
 	camera_info_msg.K = { {570.3422241210938, 0.0, 319.5, 0.0, 570.3422241210938, 239.5, 0.0, 0.0, 1.0} };
@@ -71,18 +50,10 @@ int main(int argc, char **argv) {
  
 
 	//
-	// init aligner with parameters
+	// init aligner
 	GODAlignment aligner(camera_info_msg.K);
-	aligner.align.setNumberOfSamples(a_numberOfSamples);
-	aligner.align.setCorrespondenceRandomness(a_correspondenceRandomness);
-	aligner.align.setSimilarityThreshold(a_similarityThreshold);
-	aligner.align.setMaxCorrespondenceDistance(a_maxCorrespondenceDistanceMultiplier * vg_leafSize);
-	aligner.align.setInlierFraction(a_inlierFraction);
-	aligner.align.setMaximumIterations(a_maximumIterations);
-	aligner.vg.setLeafSize(vg_leafSize, vg_leafSize, vg_leafSize);
-	aligner.nest.setRadiusSearch(nest_radius);
-	aligner.fest.setRadiusSearch(fest_radius);
 	aligner.loadModel(model_file);
+
 
 #ifdef DEBUG
 	pcl::visualization::PCLVisualizer visu;
@@ -134,9 +105,10 @@ int main(int argc, char **argv) {
 	//
 	// do the alignment
 	float error = 0;
-	int runs = 0;
 	int skip = (vec_pose.size() >= 10)? vec_pose.size()/10 : 1;
-	for (int i = 0; i < vec_pose.size(); i+=skip, ++runs) {
+	//int skip = 1;
+	int runs = 1;
+	for (int i = 0; i < vec_pose.size(); i+=skip, runs++) {
 		Mat &rgb_img = vec_rgb[i];
 		Mat &depth_img = vec_depth[i];
 		depth_img.convertTo(depth_img, CV_32FC1);
@@ -250,7 +222,7 @@ int main(int argc, char **argv) {
 		visu.spin(); 
 #endif
 
-		if(error_time > 2)
+		if(error_time > 5)
 			break;
 	}
 
@@ -258,6 +230,7 @@ int main(int argc, char **argv) {
 	// reset output buffer to default
 	cout.rdbuf( oldCoutStreamBuf );
 #endif
+
 
 	error /= runs;
 	if(!isfinite(error))
