@@ -1,0 +1,26 @@
+### opti_result_hs_2015_02_01_17_49.txt
+# very slow, succesful in train, 1/5 OK in rl
+
+#aligner_numberOfSamples: 14.783710567
+#aligner_correspondenceRandomness: 97.126584389
+#aligner_similarityThreshold: 0.035776006304
+#aligner_maxCorrespondenceDistanceMultiplier: 0.8518265533
+#aligner_inlierFraction: 0.347938133184
+#aligner_maximumIterations: 290230.496291
+#aligner_leafSize: 0.01
+#aligner_nest_radius: 0.029408131307
+#aligner_fest_radius: 0.041150700260
+
+
+### opti_result_hs_2015_02_01_17_49.txt
+# nice ...
+
+aligner_numberOfSamples: 3
+aligner_correspondenceRandomness: 50
+aligner_similarityThreshold: 0.53277
+aligner_maxCorrespondenceDistanceMultiplier: 0.71790
+aligner_inlierFraction: 0.32941
+aligner_maximumIterations: 50000
+#aligner_vg_leafSize: -0.08532
+aligner_nest_radius: 0.261373
+aligner_fest_radius: -0.02672

@@ -46,13 +46,13 @@ void GODAlignment::initParams() {
 	float fest_radius = 0.025;
 
 
-	ros::param::get("~aligner_leafSize", vg_leafSize);
 	ros::param::get("~aligner_numberOfSamples", numberOfSamples);
 	ros::param::get("~aligner_correspondenceRandomness", correspondenceRandomness);
 	ros::param::get("~aligner_similarityThreshold", similarityThreshold);
 	ros::param::get("~aligner_maxCorrespondenceDistanceMultiplier", maxCorrespondenceDistanceMultiplier);
 	ros::param::get("~aligner_inlierFraction", inlierFraction);
 	ros::param::get("~aligner_maximumIterations", maximumIterations);
+	ros::param::get("~aligner_vg_leafSize", vg_leafSize);
 	ros::param::get("~aligner_nest_radius", nest_radius);
 	ros::param::get("~aligner_fest_radius", fest_radius);
 

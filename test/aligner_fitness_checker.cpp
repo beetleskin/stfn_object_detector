@@ -105,8 +105,8 @@ int main(int argc, char **argv) {
 	//
 	// do the alignment
 	float error = 0;
-	int skip = (vec_pose.size() >= 10)? vec_pose.size()/10 : 1;
-	//int skip = 1;
+	//int skip = (vec_pose.size() >= 10)? vec_pose.size()/10 : 1;
+	int skip = 1;
 	int runs = 1;
 	for (int i = 0; i < vec_pose.size(); i+=skip, runs++) {
 		Mat &rgb_img = vec_rgb[i];
@@ -158,7 +158,6 @@ int main(int argc, char **argv) {
 		bool success = aligner.align_cloud_to_model(cluster_cloud, pose_prediction_mat, model_aligned);
 
 		float error_alignment = 0;
-		float error_time = 0;
 		if (success) {
 			pose_prediction = Eigen::Affine3f(pose_prediction_mat);
 			// calculate translational error
@@ -181,7 +180,7 @@ int main(int argc, char **argv) {
 		}
 
 
-		error_time = t1.getTimeSeconds();
+		float error_time = t1.getTimeSeconds();
 		error += error_alignment + error_time/2;
 
 #ifdef DEBUG
@@ -220,10 +219,12 @@ int main(int argc, char **argv) {
 		visu.addPointCloud<PointT>(cluster_cloud, pcl::visualization::PointCloudColorHandlerCustom<PointT>(cluster_cloud, 0, 255, 0), "cluster");
 		visu.addPointCloud<PointT>(model_aligned,  pcl::visualization::PointCloudColorHandlerCustom<PointT>(model_aligned, 255, 0, 0), "model_aligned");
 		visu.spin(); 
-#endif
-
+#else
 		if(error_time > 5)
 			break;
+#endif
+
+		
 	}
 
 #ifndef DEBUG

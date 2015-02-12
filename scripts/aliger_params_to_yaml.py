@@ -22,17 +22,24 @@ if __name__ == '__main__':
 				"_aligner_maxCorrespondenceDistanceMultiplier:=%.5f" % params[3],
 				"_aligner_inlierFraction:=%.5f" % params[4],
 				"_aligner_maximumIterations:=%.5f" % params[5],
-				"_aligner_vg_leafSize:=%.5f" % params[6],
+				#"_aligner_vg_leafSize:=%.5f" % params[6],
 				"_aligner_nest_radius:=%.5f" % params[7],
-				"_aligner_fest_radius:=%.5f" % params[8]]
+				"_aligner_fest_radius:=%.5f" % params[8]
+			]
 
-			process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-			output, _ = process.communicate()
-			error = float(output.split(":")[-1])
+			summed_error = 0.0
+			runs = 3
+			for i in range(runs):
+				process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+				output, _ = process.communicate()
+				error = float(output.split(":")[-1])
+				summed_error += error
+
+			mean_error = summed_error / runs
 
 
 			print "expected error: %f" % result_data['error']
-			print "real error: %f\n" % error
+			print "real error: %f\n" % mean_error
 
 
 
