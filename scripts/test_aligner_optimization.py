@@ -22,7 +22,7 @@ if __name__ == '__main__':
 				"_aligner_maxCorrespondenceDistanceMultiplier:=%.5f" % params[3],
 				"_aligner_inlierFraction:=%.5f" % params[4],
 				"_aligner_maximumIterations:=%.5f" % params[5],
-				#"_aligner_vg_leafSize:=%.5f" % params[6],
+				"_aligner_vg_leafSize:=%.5f" % params[6],
 				"_aligner_nest_radius:=%.5f" % params[7],
 				"_aligner_fest_radius:=%.5f" % params[8]
 			]

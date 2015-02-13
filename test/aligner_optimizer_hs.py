@@ -40,6 +40,7 @@ class ObjectiveFunction(ObjectiveFunctionInterface):
         self._lower_bounds = self._aEval.lower_bounds
         self._upper_bounds = self._aEval.upper_bounds
         self._variable = [True, True, True, True, True, True, True, True, True]
+        self._discrete = [True, True, False, False, False, True, False, False, False]
 
         # define all input parameters
         self._maximize = False  # minimize
@@ -67,7 +68,7 @@ class ObjectiveFunction(ObjectiveFunctionInterface):
         return self._variable[i]
 
     def is_discrete(self, i):
-        return False
+        return self._discrete[i]
 
     def get_num_parameters(self):
         return len(self._lower_bounds)
