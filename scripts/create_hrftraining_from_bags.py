@@ -19,6 +19,27 @@ import common
 """
 
 
+def prepare_path(path, model):
+	""""
+	Checks if path exists and react with override or return, dependent on user choice.
+	"""
+
+	if os.path.isdir(path):
+		choices = ['y', 'n']
+		user_input = ""
+		while user_input not in choices:
+			user_input = raw_input("DB folder for model '%s' exists, override? [%s]: " % (model, '/'.join(choices)))
+		if user_input is choices[0]:
+			import shutil
+			shutil.rmtree(path, True)
+		elif user_input is choices[1]:
+			return False
+
+	os.mkdir(path)
+	return True
+	
+
+
 
 
 
@@ -210,28 +231,24 @@ if __name__ == '__main__':
 		'barrel': "spacebot_barrel.bag",
 		'block': "spacebot_block.bag",
 	}
-	background_bags = {
-		'background': "spacebot_background.bag"
-	}
-	test_bags = {
-		'test': "spacebot_testdata.bag"
+	scene_bags = {
+		'spacebot_bg': "spacebot_background.bag",
+		'spacebot_test': "spacebot_testdata.bag"
 	}
 	
 
 	#
 	## identifier for the [rgb, mask and depth] image topics within the bag files, edit if they dont match
 	object_topics = ["/camera/rgb/image_color", "/camera/mask", "/camera/depth/image"]
-	default_topics = ["/camera/rgb/image_raw", "/camera/depth_registered/image_raw"]
+	scene_topics = ["/camera/rgb/image_raw", "/camera/depth_registered/image_raw"]
 
 
 	#
 	# other parameter
+	db_basepath = rospy.get_param("/recognition_db_basepath", "/home/stfn/recognition_database")
 	max_images_per_object = 200
-	max_images_per_background = 100
+	max_images_per_scene = 100
 	max_images_per_test = 100
-	output_base_path = "dhrf_config"
-	output_data_path = output_base_path + os.sep + "data"
-	output_config_path = output_base_path + os.sep + "config"
 	
 	#####################################################################
 	#####################################################################
@@ -245,8 +262,7 @@ if __name__ == '__main__':
 
 	# prepare the data containers
 	object_data = {}
-	background_data = {}
-	test_data = {}
+	scene_data = {}
 
 
 	#
@@ -269,38 +285,23 @@ if __name__ == '__main__':
 		#unify_patch_size(object_patches)
 		object_data[object_id] = patches
 
+
 	#
-	## read the object bags and extract the images
-	logging.info("Reading background data bags")
-	for background_id, bag_file in background_bags.items():
+	## read the scene bags and extract the images
+	logging.info("Reading scene data bags")
+	for scene_id, bag_file in scene_bags.items():
 		logging.info("\t... reading %s" % bag_file)
-		images = load_rgb_depth_from_bag(bag_file, default_topics)
+		images = load_rgb_depth_from_bag(bag_file, scene_topics)
 		logging.info("\t... found %d images" % len(images))
 
 		# remove images if too much:
-		if len(images) > max_images_per_background:
-			logging.info("\t... truncating %d images" % (len(images) - max_images_per_background))
-			images = truncate_uniform(images, max_images_per_background)
-			images = truncate_uniform(images, max_images_per_background)
+		if len(images) > max_images_per_scene:
+			logging.info("\t... truncating %d images" % (len(images) - max_images_per_scene))
+			images = truncate_uniform(images, max_images_per_scene)
+			images = truncate_uniform(images, max_images_per_scene)
 
-		background_data[background_id] = images
+		scene_data[scene_id] = images
 
-
-	#
-	## read the test bags and extract the images
-	logging.info("Reading test data bags")
-	for test_id, bag_file in test_bags.items():
-		logging.info("\t... reading %s" % bag_file)
-		images = load_rgb_depth_from_bag(bag_file, default_topics)
-		logging.info("\t... found %d images" % len(images))
-
-		# remove images if too much:
-		if len(images) > max_images_per_test:
-			logging.info("\t... truncating %d images" % (len(images) - max_images_per_test))
-			images = truncate_uniform(images, max_images_per_test)
-			images = truncate_uniform(images, max_images_per_test)
-
-		test_data[test_id] = images
 
 
 
@@ -308,113 +309,66 @@ if __name__ == '__main__':
 	## write images and config files
 	logging.info("Writing images")
 
-
-	#
-	## check if output path exists and react with override or exit
-	if os.path.isdir(output_base_path):
-		choices = ['y', 'n']
-		user_input = ""
-		while user_input not in choices:
-			user_input = raw_input("Output directory exists, override? [%s]: " % ('/'.join(choices)))
-		if user_input is choices[0]:
-			import shutil
-			shutil.rmtree(output_base_path, True)
-		elif user_input is choices[1]:
-			print "Can't write output data, aborting ..."
-			sys.exit(0)
-	os.mkdir(output_base_path)
-	os.mkdir(output_data_path)
-	os.mkdir(output_config_path)
-
-
-	#
-	## generate train and test wrapper config
-	train_config_file = open(output_config_path + os.sep + "_train_config.cfg",'w')
-	train_config_file.write("%d\n" % (len(object_data) + len(background_data)))
-	test_config_file = open(output_config_path + os.sep + "_test_config.cfg",'w')
-	test_config_file.write("%d\n" % len(test_data))
-		
 	
 	#
 	## write object images
-	for object_numerical_id, (object_id, object_patches) in enumerate(object_data.items(), 1):
-		
-		# create sub-directory
-		object_data_path = output_data_path + os.sep + object_id
-		os.mkdir(object_data_path)
+	for object_id, object_patches in object_data.items():
+
+
+		# prepare path
+		db_model_base_path = db_basepath + os.sep + "models" + os.sep + object_id
+		db_model_image_path = db_model_base_path + os.sep + 'images'
+		prepared = prepare_path(db_model_base_path, object_id)
+		if not prepared:
+			logging.warning("\tskipping %s" % object_id)
+			continue
+		os.mkdir(db_model_image_path)
+
 
 		# init config file
-		config_file = open(output_config_path + os.sep + object_id + ".cfg",'w')
+		config_file = open(db_model_base_path + os.sep + object_id + ".cfg",'w')
 		config_file.write("%d 1\n" % len(object_patches))
 
 		# write image and config line
 		for i, (rgb, depth) in enumerate(object_patches):
-			image_file_base_name = object_id + "_%04i" % i
-			config_line = os.path.abspath(object_data_path) + os.sep + image_file_base_name + "_crop.png" + " %d %d %d %d %d %d\n" % (0, 0, rgb.shape[1], rgb.shape[0], int(rgb.shape[1]/2), int(rgb.shape[0]/2))
+			image_file_base = db_model_image_path + os.sep + object_id + "_%04i" % i
+			config_line = image_file_base + "_crop.png" + " %d %d %d %d %d %d\n" % (0, 0, rgb.shape[1], rgb.shape[0], int(rgb.shape[1]/2), int(rgb.shape[0]/2))
 						
 			# write config line
 			config_file.write(config_line) 
 
 			# write rgb and depth image
-			cv2.imwrite(object_data_path + os.sep + image_file_base_name + "_crop.png", rgb)
-			cv2.imwrite(object_data_path + os.sep + image_file_base_name + "_depthcrop.png", depth)
-
-		# add object config to config wrapper file
-		train_config_file.write("%d %s\n" % (1, "." + os.sep + os.path.basename(output_config_path) + os.sep + os.path.basename(config_file.name)))
+			cv2.imwrite(image_file_base + "_crop.png", rgb)
+			cv2.imwrite(image_file_base + "_depthcrop.png", depth)
 
 
 
 	#
 	## write background images
-	for background_id, background_images in background_data.items():
+	for scene_id, scene_images in scene_data.items():
+
+		# prepare path
+		db_model_base_path = db_basepath + os.sep + "scenes" + os.sep + scene_id
+		db_model_image_path = db_model_base_path + os.sep + 'images'
+		prepared = prepare_path(db_model_base_path, scene_id)
+		if not prepared:
+			logging.warning("\tskipping %s" % scene_id)
+			continue
+		os.mkdir(db_model_image_path)
 		
-		# create sub-directory
-		background_data_path = output_data_path + os.sep + background_id
-		os.mkdir(background_data_path)
 
 		# init config file
-		config_file = open(output_config_path + os.sep + background_id + ".cfg",'w')
-		config_file.write("%d 1\n" % len(background_images))
+		config_file = open(db_model_base_path + os.sep + scene_id + ".cfg",'w')
+		config_file.write("%d 1\n" % len(scene_images))
 
 		# write image and config line
-		for i, (rgb, depth) in enumerate(background_images):
-			image_file_base_name = background_id + "_%04i" % i
-			config_line = os.path.abspath(background_data_path) + os.sep + image_file_base_name + ".png" + " %d %d %d %d %d %d\n" % (0, 0, rgb.shape[1], rgb.shape[0], int(rgb.shape[1]/2), int(rgb.shape[0]/2))
-			
-			# write config line
-			config_file.write(config_line)
-
-			# write rgb and depth image
-			cv2.imwrite(background_data_path + os.sep + image_file_base_name + ".png", rgb)
-			cv2.imwrite(background_data_path + os.sep + image_file_base_name + "_depth.png", depth)
-
-		# add object config to config wrapper file
-		train_config_file.write("%d %s\n" % (0, "." + os.sep + os.path.basename(output_config_path) + os.sep + os.path.basename(config_file.name)))
-
-
-
-	#
-	## write test images
-	for test_id, test_images in test_data.items():
-		
-		# create sub-directory
-		test_data_path = output_data_path + os.sep + test_id
-		os.mkdir(test_data_path)
-
-		# init config file
-		config_file = open(output_config_path + os.sep + test_id + ".cfg",'w')
-		config_file.write("%d\n" % len(test_images))
-
-		# write image and config line
-		for i, (rgb, depth) in enumerate(test_images):
-			image_file_base_name = test_id + "_%04i" % i
-			config_line = os.path.abspath(test_data_path) + os.sep + image_file_base_name + "_crop.png\n"
+		for i, (rgb, depth) in enumerate(scene_images):
+			image_file_base = os.path.abspath(db_model_image_path) + os.sep + scene_id + "_%04i" % i
+			config_line = image_file_base + ".png\n"
 
 			# write config line
 			config_file.write(config_line)
 
 			# write rgb and depth image
-			cv2.imwrite(test_data_path + os.sep + image_file_base_name + ".png", rgb)
-			cv2.imwrite(test_data_path + os.sep + image_file_base_name + "_depth.png", depth)
-
-		test_config_file.write("%s\n" % ("." + os.sep + os.path.basename(output_config_path) + os.sep + os.path.basename(config_file.name)))
+			cv2.imwrite(image_file_base + ".png", rgb)
+			cv2.imwrite(image_file_base + "_depth.png", depth)

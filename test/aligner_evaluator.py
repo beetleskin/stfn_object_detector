@@ -19,7 +19,7 @@ class AlignerEvaluater(object):
 	def evaluate(self, params):
 
 		summed_error = 0.0
-		runs = 3
+		runs = 1
 
 
 		for i in range(runs):

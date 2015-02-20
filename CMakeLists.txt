@@ -50,6 +50,7 @@ find_package(catkin REQUIRED COMPONENTS
 	visualization_msgs
 	message_generation
 	tf_conversions
+	eigen_conversions
 )
 
 # custom PCL
@@ -159,6 +160,7 @@ include_directories(
 ## Declare a cpp executable
 add_executable(detector ${DHF_DIR}/CRForest-Detector.cpp ${DHF_SOURCES})
 add_executable(ros_detector nodes/detector.cpp src/GODDetection.cpp src/GODMapping.cpp ${DHF_SOURCES})
+add_executable(ros_trainer nodes/trainer.cpp src/GODTraining.cpp ${DHF_SOURCES})
 add_executable(ros_aligner2 nodes/aligner2.cpp src/GODAlignment.cpp)
 add_executable(ros_mapper nodes/mapper.cpp)
 add_executable(ros_detect_with_pose_service src/GODAlignment.cpp src/GODDetection.cpp src/detect_with_pose_service.cpp ${DHF_SOURCES})
@@ -189,6 +191,11 @@ target_link_libraries(ros_detector
 	libvtkCommon.so
 	libvtkFiltering.so
 	libvtkGraphics.so
+)
+
+target_link_libraries(ros_trainer
+	${catkin_LIBRARIES}
+	tbb
 )
 
 target_link_libraries(ros_mapper

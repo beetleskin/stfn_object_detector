@@ -1,0 +1,7 @@
+<launch>
+	<group ns="dhf">
+		<node pkg="stfn_object_detector" type="ros_trainer" name="dhf_detector" output="screen">
+			<rosparam file="$(find stfn_object_detector)/launch/config/trainer.yaml" command="load"/>
+		</node>
+	</group>
+</launch>

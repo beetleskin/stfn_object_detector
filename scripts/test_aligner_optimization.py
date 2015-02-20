@@ -28,7 +28,7 @@ if __name__ == '__main__':
 			]
 
 			summed_error = 0.0
-			runs = 3
+			runs = 1
 			for i in range(runs):
 				process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 				output, _ = process.communicate()

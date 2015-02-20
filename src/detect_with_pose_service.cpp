@@ -10,6 +10,8 @@
 #include <pcl_ros/point_cloud.h>
 #include <sensor_msgs/image_encodings.h>
 
+#include "eigen_conversions/eigen_msg.h"
+
 
 #include <stfn_object_detector/DetectWithPose.h>
 
@@ -135,16 +137,28 @@ public:
 			Eigen::Matrix4f object_cam_transform_matrix;
 			bool success = aligner->align_cloud_to_model(cluster_cloud, object_cam_transform_matrix, model_aligned);
 
-			if(success) {
-				Eigen::Affine3f object_cam_transform(object_cam_transform_matrix);
-				Eigen::Quaternion<float> r(object_cam_transform.rotation());
-				Eigen::Vector3f t(object_cam_transform.translation());
-
+			if(!success) {
+				ROS_WARN("Could not align detection, continuing with next ...");
+				continue;
 			}
 
+			// build affine transofmation
+			Eigen::Affine3d object_cam_transform(object_cam_transform_matrix.cast<double>());
+			//Eigen::Quaternion<double> r(object_cam_transform.rotation());
+			//Eigen::Vector3d t(object_cam_transform.translation());
+
+			// publish aligned model as pointcloud
 			model_aligned->header.stamp = rgb_image->header.stamp.toNSec()/1e3;
 			model_aligned->header.frame_id = rgb_image->header.frame_id;
 			tmp_cloud_pub.publish(*model_aligned);
+
+			// generate detection response
+			stfn_object_detector::Detection3D detection;
+			detection.model_id = candidates[i][4];
+			detection.confidence = candidates[i][0];
+			tf::poseEigenToMsg(object_cam_transform, detection.pose);
+			res.detections.detections.push_back(detection);
+			
 			break;
 		}
 

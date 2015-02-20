@@ -2,6 +2,7 @@
 import cv2
 import numpy as np
 
+
 def scale_rect(rect, scaleX, scaleY=None):
 	if scaleY is None: scaleY = scaleX
 	dx = rect[2]*scaleX - rect[2]

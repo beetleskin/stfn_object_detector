@@ -70,7 +70,7 @@ void GODAlignment::initParams() {
 	// Polygonal edge length similarity threshold
 	align.setSimilarityThreshold(similarityThreshold);
 	// Set inlier threshold
-	align.setMaxCorrespondenceDistance(maxCorrespondenceDistanceMultiplier * vg.getLeafSize()[0]);
+	align.setMaxCorrespondenceDistance(maxCorrespondenceDistanceMultiplier * vg_leafSize);
 	// Set required inlier fraction
 	align.setInlierFraction(inlierFraction);
 	// Set number of maximum iterations

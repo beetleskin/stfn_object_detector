@@ -68,7 +68,9 @@ class ObjectiveFunction(ObjectiveFunctionInterface):
         return self._variable[i]
 
     def is_discrete(self, i):
-        return self._discrete[i]
+        return False
+        #TODO: geht net, not implemented error nach einiger zeit
+        #return self._discrete[i]
 
     def get_num_parameters(self):
         return len(self._lower_bounds)
