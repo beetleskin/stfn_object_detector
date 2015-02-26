@@ -28,52 +28,24 @@ using namespace std;
 GODDetection::Ptr detector;
 GODMapping::Ptr mapper;
 const float COLORS[9] = { 0,0,1, 0,1,0, 1,0,0};
-ros::Publisher markers_pub, detections_pub, tmp_cloud_pub;
+ros::Publisher detections_pub, tmp_cloud_pub;
 
 
 
-void pub_detection_markers(const vector<vector<float> > &candidates, const vector<vector<cv::Point2f> > &boundingboxes, const std_msgs::Header &input_img_header) {
-	vector<visualization_msgs::ImageMarker> markers;
-
-	for (size_t candNr = 0; candNr < candidates.size(); candNr++) {
-		// create visualization marker
-		visualization_msgs::ImageMarker im;
-		im.header.stamp = input_img_header.stamp;
-		im.header.frame_id = input_img_header.frame_id;
-		im.ns = "dhf";
-		im.id = candidates[candNr][4];
-		im.type = visualization_msgs::ImageMarker::CIRCLE;
-		im.action = visualization_msgs::ImageMarker::ADD;
-		im.position.x = candidates[candNr][1];
-		im.position.x = candidates[candNr][2];
-		im.scale = 40.f;
-		im.outline_color.a = 1;
-		im.outline_color.r = COLORS[int(candidates[candNr][4])*3 + 0];
-		im.outline_color.g = COLORS[int(candidates[candNr][4])*3 + 1];
-		im.outline_color.b = COLORS[int(candidates[candNr][4])*3 + 2];
-		markers.push_back(im);
-	}
-
-	// publish visualization
-	for (size_t i = 0; i < markers.size(); ++i) {
-		markers_pub.publish(markers[i]);
-	}
-}
-
-void pub_detections(const vector<vector<float> > &candidates, const vector<vector<cv::Point2f> > &boundingboxes, const std_msgs::Header &input_img_header) {
+void pub_detections(const vector<Candidate> &candidates, const std_msgs::Header &input_img_header) {
 	stfn_object_detector::Detection2DArr detectionArr;
 	
 	for (size_t candNr = 0; candNr < candidates.size(); candNr++) {
 		// create detection
 		stfn_object_detector::Detection2D d;
-		d.id = candidates[candNr][4];
-		d.confidence = candidates[candNr][0];
-		d.center.x = candidates[candNr][1];
-		d.center.y = candidates[candNr][2];
-		d.leftTop.x = boundingboxes[candNr][0].x;
-		d.leftTop.y = boundingboxes[candNr][0].y;
-		d.bottomRight.x = boundingboxes[candNr][1].x;
-		d.bottomRight.y = boundingboxes[candNr][1].y;
+		d.id = candidates[candNr].class_id;
+		d.confidence = candidates[candNr].confidence;
+		d.center.x = candidates[candNr].center.x;
+		d.center.y = candidates[candNr].center.y;
+		d.leftTop.x = candidates[candNr].bb[0].x;
+		d.leftTop.y = candidates[candNr].bb[0].y;
+		d.bottomRight.x = candidates[candNr].bb[1].x;
+		d.bottomRight.y = candidates[candNr].bb[1].y;
 		detectionArr.detections.push_back(d);
 	}
 
@@ -111,14 +83,12 @@ void imageCallback(const sensor_msgs::ImageConstPtr &rgb_msg, const sensor_msgs:
 
 	//
 	// run the full detection
-	vector<vector<float> > candidates;
-	vector<vector<cv::Point2f> > boundingboxes;
-	detector->detect(rgb_cv_ptr->image, depth_cv_ptr->image, candidates, boundingboxes);
+	vector<Candidate> candidates;
+	detector->detect(rgb_cv_ptr->image, depth_cv_ptr->image, candidates);
 
 	// publish visualization markers
 	ROS_INFO("got %d detections", (int)candidates.size());
-	pub_detection_markers(candidates, boundingboxes, rgb_msg->header);
-	pub_detections(candidates, boundingboxes, rgb_msg->header);
+	pub_detections(candidates, rgb_msg->header);
 
 
 	//
@@ -132,7 +102,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr &rgb_msg, const sensor_msgs:
 
 	//
 	// run the mapping and persistence
-	mapper->update(depth_cv_ptr->image, cloud, candidates, boundingboxes);
+	//mapper->update(depth_cv_ptr->image, cloud, candidates);
 }
 
 
@@ -147,7 +117,6 @@ int main(int argc, char **argv) {
 
 	// register publishers
 	ros::NodeHandle nh;
-	markers_pub = nh.advertise<visualization_msgs::ImageMarker>("dhf_detection_markers", 10);
 	detections_pub = nh.advertise<stfn_object_detector::Detection2DArr>("dhf_detections", 10);
 	tmp_cloud_pub = nh.advertise<pcl::PointCloud<pcl::PointXYZ> >("tmp_cloud", 10);
 

@@ -18,6 +18,10 @@ GODMapping::GODMapping() {
 
 	visu.reset(new pcl::visualization::PCLVisualizer());
 	visu->setBackgroundColor(0.7, 0.7, 0.7);
+
+	this->model_db_ptr = ModelDBStub::get();
+
+	cluster_count = 0;
 }
 
 
@@ -34,7 +38,7 @@ void GODMapping::lookup_cam_transform(ros::Time &t, Eigen::Affine3d eigen_transf
 
 // TODO: cluster center is resolved in camera frame, make it relative to world frame
 // TODO: parametrize model-radius for both, existing cluster and new ones
-void GODMapping::update(cv::Mat &depth_img, PointCloudT::Ptr &cloud, vector<vector<float> > &candidates, vector<vector<cv::Point2f> > &boundingboxes) {
+void GODMapping::update(cv::Mat &depth_img, PointCloudT::Ptr &cloud, vector<Candidate> &candidates) {
 	
 
 	// visu stuff
@@ -51,18 +55,18 @@ void GODMapping::update(cv::Mat &depth_img, PointCloudT::Ptr &cloud, vector<vect
 
 	// for each detection, add or merge to existing cluster map
 	for (size_t candNr = 0; candNr < candidates.size(); candNr++) {
-		const vector<float> &candidate = candidates[candNr];
-		const vector<cv::Point2f> &bb = boundingboxes[candNr];
+		const Candidate &candidate = candidates[candNr];
+		const ModelEntry &candidate_model = model_db_ptr->get_model(candidate.class_name);
 
 		//
 		// check thresholds for individual classes
-		if(candidate[0] < model_db.get_model_by_id(candidate[4]).threshold_consideration) {
+		if(candidate.confidence < candidate_model.threshold_consideration) {
 			continue;
 		}
 
 
 		// TODO: sometimes this happens ... why?
-		if(bb[0].x > bb[1].x || bb[0].y > bb[1].y) {
+		if(candidate.bb[0].x > candidate.bb[1].x || candidate.bb[0].y > candidate.bb[1].y) {
 			ROS_WARN("Dropping invalid detection");
 			continue;
 		}
@@ -70,31 +74,32 @@ void GODMapping::update(cv::Mat &depth_img, PointCloudT::Ptr &cloud, vector<vect
 
 		//
 		// delete detection from the depth image
-		cv::Rect detection_rect(bb[0].x, bb[0].y, bb[1].x-bb[0].x, bb[1].y-bb[0].y);
+		cv::Rect detection_rect(candidate.bb[0].x, candidate.bb[0].y, candidate.bb[1].x-candidate.bb[0].x, candidate.bb[1].y-candidate.bb[0].y);
 		if(detection_rect.x < 0) detection_rect.x = 0;
 		if(detection_rect.y < 0) detection_rect.y = 0;
 		if(detection_rect.x+detection_rect.width >= depth_img.cols) detection_rect.width = depth_img.cols - detection_rect.x - 1;
 		if(detection_rect.y+detection_rect.height >= depth_img.rows) detection_rect.height = depth_img.rows - detection_rect.y - 1;
 		depth_img(detection_rect) = cv::Scalar(0);
-		ROS_INFO("cand#%d: %f", (int)candNr, candidate[0]);
+		ROS_INFO("cand#%d: %f", (int)candNr, candidate.confidence);
 
 
 		//
 		// get detection cluster center in 3D space
 		PointT query_cluster_center(numeric_limits<float>::quiet_NaN(), numeric_limits<float>::quiet_NaN(), numeric_limits<float>::quiet_NaN());
-		if(candidate[1] >= 0 && candidate[1] < cloud->width && candidate[2] >= 0 && candidate[2] < cloud->height)
-			query_cluster_center = cloud->at(candidate[1], candidate[2]);
+		if(candidate.center.x >= 0 && candidate.center.x < cloud->width && candidate.center.y >= 0 && candidate.center.y < cloud->height)
+			query_cluster_center = cloud->at(candidate.center.x, candidate.center.y);
 		if(!pcl::isFinite(query_cluster_center)) {
 			ROS_ERROR("Detection cluster center is not finite! Aborting mapping for detection %d", (int)candNr);
 			continue;
 		}
 
+
+		// create new cluster
 		DetectionClusterPoint query_cluster;
 		query_cluster.x = query_cluster_center.x;
 		query_cluster.y = query_cluster_center.y;
 		query_cluster.z = query_cluster_center.z;
-		query_cluster.confidence = candidate[0];
-		query_cluster.class_id = candidate[4];
+		query_cluster.confidence = candidate.confidence;
 
 		// transform it from cam coordinate system to global (map)
 		pcl::transformPoint(query_cluster, cam_map_tf);
@@ -111,17 +116,19 @@ void GODMapping::update(cv::Mat &depth_img, PointCloudT::Ptr &cloud, vector<vect
 			for (int i = 0; i < search_indices.size(); ++i) {
 				DetectionClusterPoint &matching_cluster = detection_cloud->points[search_indices[i]];
 				// check radius again with correct params for existing and query cluster
-				float query_cluster_class_radius = model_db.get_model_by_id(query_cluster.class_id).radius;
-				float matching_cluster_class_radius = model_db.get_model_by_id(matching_cluster.class_id).radius;
+
+				float query_cluster_class_radius = candidate_model.radius;
+				string matching_cluster_class_name = cluster_model_map[matching_cluster.cluster_id];
+				float matching_cluster_class_radius = model_db_ptr->get_model(matching_cluster_class_name).radius;
 				float combined_search_radius_sqr = (query_cluster_class_radius+matching_cluster_class_radius) * (query_cluster_class_radius+matching_cluster_class_radius);
 				
 				if(search_sqr_distances[i] < combined_search_radius_sqr) {
-					if(query_cluster.class_id == matching_cluster.class_id) {
+					if(candidate.class_name == matching_cluster_class_name) {
 						// same class, merge clusters
 						merge_clusters(query_cluster, matching_cluster);
 						ROS_INFO("merging, new conf: %f", query_cluster.confidence);
 					} else {
-						// different class, what todo?
+						// TODO: different class, what todo?
 						// delete the old one, add the new one?
 					}
 				}
@@ -131,6 +138,9 @@ void GODMapping::update(cv::Mat &depth_img, PointCloudT::Ptr &cloud, vector<vect
 			}
 			
 		} else {
+			query_cluster.cluster_id = cluster_count++;
+			cluster_model_map[query_cluster.cluster_id] = candidate.class_name;
+
 			add_cluster(query_cluster);
 			ROS_INFO("adding, new conf: %f", query_cluster.confidence);
 		}
@@ -178,6 +188,7 @@ void GODMapping::update(cv::Mat &depth_img, PointCloudT::Ptr &cloud, vector<vect
 
 				// delete cluster
 				if(cluster.confidence < 0.1) {
+					cluster_model_map.erase(cluster.cluster_id);
 					detection_cloud->points.erase(detection_cloud->points.begin() + j);
 					j--;
 				}

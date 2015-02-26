@@ -1,9 +1,8 @@
-forest_path: '/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_rl/_finalfeature_gpu/1/forest/treetable_'
+#forest_path: '/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_rl/_finalfeature_gpu/1/forest/treetable_'
+#forest_path: '/home/stfn/recognition_database/forests/huiii/'
 num_trees: 15
-off_trees: 0
-p_widht: 10
-p_height: 10
-initial_scale: 0.7
+patch_widht: 10
+patch_height: 10
 kernel_smooth: 15
 kernel_vote: 20
 kernel_sigma: 2

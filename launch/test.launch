@@ -1,0 +1,18 @@
+<launch>
+    <rosparam ns="/model_db/can_big_bear">
+        bb: [0.05, 0.13, 0.05]
+        radius: 0.65
+    </rosparam>
+    <rosparam ns="/model_db/can_tissue_can">
+        bb: [0.08, 0.18, 0.08]
+        radius: 0.6
+    </rosparam>
+    <rosparam ns="/model_db/block">
+        bb: [0.2, 0.04, 0.1]
+        radius: 0.1
+    </rosparam>
+    <rosparam ns="/model_db/barrel">
+        bb: [0.08, 0.12, 0.08]
+        radius: 0.06
+    </rosparam>
+</launch>

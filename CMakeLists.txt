@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(stfn_object_detector)
 
+set(CMAKE_BUILD_TYPE RelWithDebInfo)
 
 #########################
 ## TODO TODO TODO TODO ##
@@ -20,12 +21,12 @@ set(EIGEN_INCLUDE_DIRS "/home/stfn/libs/eigen3.2.1")
 set(DHF_DIR "/home/stfn/dev/hf_mc/evaluations/rewrite/detector")
 #file(GLOB DHF_SOURCES ${DHF_DIR}/*.cpp)
 set(DHF_SOURCES 
-	${DHF_DIR}/Candidate.cpp
 	${DHF_DIR}/CRForest.cpp
 	${DHF_DIR}/CRForestDetector.cpp
 	${DHF_DIR}/CRPatch.cpp
 	${DHF_DIR}/CRTree.cpp
 	${DHF_DIR}/HoG.cpp
+	src/GODImageMemory.cpp
 )
 
 #########################
@@ -158,7 +159,7 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-add_executable(detector ${DHF_DIR}/CRForest-Detector.cpp ${DHF_SOURCES})
+#add_executable(detector ${DHF_DIR}/CRForest-Detector.cpp ${DHF_SOURCES})
 add_executable(ros_detector nodes/detector.cpp src/GODDetection.cpp src/GODMapping.cpp ${DHF_SOURCES})
 add_executable(ros_trainer nodes/trainer.cpp src/GODTraining.cpp ${DHF_SOURCES})
 add_executable(ros_aligner2 nodes/aligner2.cpp src/GODAlignment.cpp)
@@ -178,11 +179,11 @@ add_dependencies(ros_detect_with_pose_service stfn_object_detector_generate_mess
 # add_dependencies(stfn_object_detector_node stfn_object_detector_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(detector
-	${catkin_LIBRARIES}
-	${OpenCV_LIBS}
-	tbb
-)
+#target_link_libraries(detector
+#	${catkin_LIBRARIES}
+#	${OpenCV_LIBS}
+#	tbb
+#)
 
 target_link_libraries(ros_detector
 	${catkin_LIBRARIES}

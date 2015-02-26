@@ -4,6 +4,130 @@
 		"selected_items":
 		[
 			[
+				"map",
+				"cluster_model_map"
+			],
+			[
+				"back",
+				"backprojection_mask"
+			],
+			[
+				"rando",
+				"random_seed"
+			],
+			[
+				"backp",
+				"backproj_mask"
+			],
+			[
+				"pc",
+				"pcd_model_file"
+			],
+			[
+				"th",
+				"threshold_consideration"
+			],
+			[
+				"kernel",
+				"kernel_smooth"
+			],
+			[
+				"vIm",
+				"vImgAssign"
+			],
+			[
+				"params",
+				"GODDetectionParams"
+			],
+			[
+				"ima",
+				"image_scale"
+			],
+			[
+				"GOD",
+				"GODDetectionParams"
+			],
+			[
+				"fore",
+				"forest_path"
+			],
+			[
+				"pape",
+				"patches_per_model_image"
+			],
+			[
+				"object_",
+				"object_centers"
+			],
+			[
+				"bb",
+				"object_bbs"
+			],
+			[
+				"model",
+				"model_config_file"
+			],
+			[
+				"sys",
+				"system_status"
+			],
+			[
+				"SE",
+				"PATH_SEP"
+			],
+			[
+				"object",
+				"object_images"
+			],
+			[
+				"outpu",
+				"output_path"
+			],
+			[
+				"max_",
+				"max_images_per_test〔variable〕"
+			],
+			[
+				"to_re",
+				"to_remove_idx〔variable〕"
+			],
+			[
+				"as",
+				"astype"
+			],
+			[
+				"fest",
+				"fest_radius"
+			],
+			[
+				"spaceb",
+				"spacebot_cup"
+			],
+			[
+				"sum",
+				"summed_error〔variable〕"
+			],
+			[
+				"resul",
+				"result_data〔variable〕"
+			],
+			[
+				"result",
+				"results_dir〔variable〕"
+			],
+			[
+				"Key",
+				"KeyboardInterrupt〔class〕"
+			],
+			[
+				"best",
+				"best_params"
+			],
+			[
+				"align",
+				"alignments"
+			],
+			[
 				"old",
 				"oldCoutStreamBuf"
 			],
@@ -55,85 +179,21 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "src/detect_with_pose_service.cpp",
-			"settings":
-			{
-				"buffer_size": 5835,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "nodes/detector.cpp",
-			"settings":
-			{
-				"buffer_size": 5309,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRForest-Detector.cpp",
-			"settings":
-			{
-				"buffer_size": 28055,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "test/aligner_fitness_checker.cpp",
-			"settings":
-			{
-				"buffer_size": 9218,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "launch/detection_service.launch",
-			"settings":
-			{
-				"buffer_size": 450,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "CMakeLists.txt",
-			"settings":
-			{
-				"buffer_size": 7934,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "test/aligner_optimizer_pso.py",
-			"settings":
-			{
-				"buffer_size": 203,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "include/GODAlignment.hpp",
-			"settings":
-			{
-				"buffer_size": 1803,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/GODAlignment.cpp",
-			"settings":
-			{
-				"buffer_size": 8708,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 327.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"codint",
+				"SublimeCodeIntel: Reset"
+			],
+			[
+				"codein",
+				"SublimeCodeIntel: Reset"
+			],
 			[
 				"pali",
 				"Package Control: List Packages"
@@ -170,68 +230,142 @@
 	[
 		"/home/stfn/catkin_ws/src/stfn_object_detector",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/include",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/detector",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/launch",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/config",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/msg",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/src",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/srv",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/test"
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src"
 	],
 	"file_history":
 	[
-		"/home/stfn/catkin_ws/src/stfn_object_detector/package.xml",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/detection_service.launch",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/CMakeLists.txt",
-		"/opt/eclipse/eclipse.ini",
-		"/usr/share/applications/eclipse.desktop",
-		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRPatch.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/_codeblocks/CMakeFiles/CMakeOutput.log",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/test/aligner_fitness_checker.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/align.launch",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/test/hs_result_2015_01_23_18_55_50.txt",
-		"/home/stfn/harmony_search.py",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/test/aligner_parameter_optimizer.py",
-		"/home/stfn/Things/Logs/MakerBot-Desktop-2015-01-29_11-50-56.log",
-		"/home/stfn/Things/Profiles/stfn_high/miracle.json",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODAlignment.hpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/test/hs_result_2014_11_13_16_32_42.txt",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/detector.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/aligner2.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/include/ModelDBStub.hpp",
-		"//home/stfn/Things/Profiles/stfn_high/miracle.json",
-		"/home/stfn/Things/Logs/MakerBot-Desktop-2015-01-23_15-38-06.log",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODDetection.hpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/.gitignore",
-		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRForest-Detector.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/icp.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODDetectionParams.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/config/trainer.yaml",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/Candidate.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/current/train_2/6_honv2/1/detections_A/detect_o0_n15-0-0_cand_all/candidates.txt",
+		"/home/stfn/dev/hf_mc/evaluations/current/detector/CRForestDetector.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRForestDetector.cpp",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/detect.launch",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODMapping.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/aligner.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/config/default.yaml",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/srv/DetectWithPose.srv",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODDetection.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODAlignment.cpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/mapper.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/CMakeLists.txt",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODTraining.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRTree.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRTree.cpp",
+		"/run/user/1001/gvfs/archive:host=file%253A%252F%252F%252Fhome%252Fstfn%252Fdev%252Fhf_mc%252Fevaluations%252Fcurrent%252Ftrain_2%252F6_honv2%252F1%252Fforest.tar/train_2/6_honv2/1/forest/treetable_000.txt",
+		"/home/stfn/dev/hf_mc/evaluations/_scripts/eval_scene_detection.py",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRForest.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODMapping.cpp",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/src/detect_with_pose_service.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/ModelDBStub.hpp",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODMapping.hpp",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/msg/Detection2DArr.msg",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODTraining.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/myhog.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRForestDetector.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/detector.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRForest-Detector.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/current/detector/Candidate.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODDetection.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/Candidate.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/current/detector/CRForest-Detector.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODImageMemory.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODImageMemory.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/detector/GODImageMemory.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRForest.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/srv/DetectWithPose.srv",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/detector_standalone.rviz",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/detector/CRForestDetector.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRPatch.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/myutils.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRPatch.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/test.launch",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/config/detector.yaml",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GlobalParams.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_rl/_finalfeature_gpu/1/train_files/can_1.cfg",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/align (copy).launch",
+		"/home/stfn/recognition_database/models/barrel/barrel.cfg",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/train.launch",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/mapper.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/trainer.cpp",
+		"/home/stfn/.bashrc",
+		"/home/stfn/recognition_database/forests/huiii/000.txt",
+		"/home/stfn/recognition_database/models/block/block.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_spacebot_cup/auto_config/config.txt",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CMakeLists.txt",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/detection_service.launch",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/detector/GpuHoG.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/scripts/create_hrftraining_from_bags.py",
+		"/home/stfn/recognition_database/scenes/spacebot_bg/spacebot_bg.cfg",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/msg/Detection3D.msg",
 		"/home/stfn/catkin_ws/src/stfn_object_detector/msg/Detection3DArr.msg",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/msg/Detection2D.msg",
-		"/home/stfn/.bashrc",
-		"/var/log/conveyor/conveyord.log",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/test/hs_result_2014_11_11_13_55_19.txt",
-		"/media/ssd_ubuntu/home/stfn/.bashrc",
+		"/home/stfn/catkin_ws/build/stfn_object_detector/CMakeFiles/stfn_object_detector_generate_messages_cpp.dir/build.make",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/aligner.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/icp.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_spacebot_cup/auto_config/config.txt",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/map.launch",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/scripts/common.py",
+		"/home/stfn/testdata/spacebot_cup/bags/dhrf_config/config/background.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_spacebot_cup/auto_config/config/test.cfg",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/scripts/test_aligner_optimization.py",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/aligner_evaluator.py",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/src/GODAlignment.cpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/aligner_fitness_checker.cpp",
 		"/home/stfn/dev/hf_mc/evaluations/_scripts/show_best_per_frame.py",
-		"/home/stfn/dev/hf_mc/evaluations/_scripts/helper.py",
-		"/home/stfn/catkin_ws/src/stfn_object_detector/src/ModelDBStub.hpp",
-		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_rl/_finalfeature_gpu/1/test_files/_test_1.cfg",
-		"/home/stfn/testdata/_test_1.txt",
-		"/media/ssd_ubuntu/home/stfn/catkin_ws/src/stfn_object_detector/test/aligner_parameter_optimizer.py",
-		"/media/ssd_ubuntu/home/stfn/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
-		"/media/ssd_ubuntu/home/stfn/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
-		"/opt/sublime_text/changelog.txt"
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/aligner_optimizer_hs.py",
+		"/home/stfn/harmony_search.py",
+		"/home/stfn/testdata/spacebot_cup/bags/dhrf_config/config/block.cfg",
+		"/home/stfn/testdata/spacebot_cup/bags/dhrf_config/config/test.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_spacebot_cup/auto_config/config/_train_config.cfg",
+		"/home/stfn/testdata/spacebot_cup/bags/dhrf_config/config/_config.txt",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_spacebot_cup/auto_config/config/block.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_spacebot_cup/initial/train_files/_train_files.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_spacebot_cup/auto_config/config/barrel.cfg",
+		"/home/stfn/testdata/spacebot_cup/bags/dhrf_config/config/_test_config.cfg",
+		"/home/stfn/testdata/spacebot_cup/bags/dhrf_config/config/_train_config.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_4/1_sxxyy_dvalrelscale/check/1/test_files/_desk_2.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_4/1_sxxyy_dvalrelscale/check/1/train_files/_train_files.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_4/1_sxxyy_dvalrelscale/check/1/train_files/bowl_3.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_7/1_sxxyy_dvalrelscale/check_single_scale/4/config.txt",
+		"/home/stfn/dev/hf/scripts/create_data.py",
+		"/home/stfn/dev/hf/scripts/common.py",
+		"/home/stfn/dev/hf/scripts/examine_detections.py",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_7/1_sxxyy_dvalrelscale/check_single_scale/4/train_files/_train_files.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_7/1_sxxyy_dvalrelscale/check_single_scale/4/test_files/_test_files.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_7/1_sxxyy_dvalrelscale/check_single_scale/4/test_files/_table_1.cfg",
+		"/home/stfn/testdata/_bg.txt",
+		"/home/stfn/testdata/spacebot_cup/bags/dhrf_config/config/barrel.cfg",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/aligner_optimizer_es.py",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/scripts/aliger_params_to_yaml.py",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/config/aligner_test.yaml",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/align.launch",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/include/GODAlignment.hpp",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/results/opti_result_es_2015_02_09_00_50.txt",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/launch/config/aligner.yaml",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/results/opti_result_es_2015_02_05_19_33.txt",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/results/opti_result_hs_2015_02_09_00_50.txt",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/test/results/opti_result_hs_2015_02_01_17_49.txt",
+		"/tmp/.fr-AootxT/manifest.json",
+		"/home/stfn/catkin_ws/src/stfn_object_detector/nodes/aligner2.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_spacebot_cup/train_files/_bg.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/detector/CRTree.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/detector/CRForest.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/detector/CMakeLists.txt",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_spacebot_cup/train_files/_bg.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/detector/CRTree.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/detector/CRForest-Detector.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/detector/CRForest.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/detector/HoG.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/detector/Candidate.cpp",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/detector/Candidate.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/detector/myutils.hpp",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_spacebot_cup/train_files/spacebot_block.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_spacebot_cup/test_files/_test.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_spacebot_cup/train_files/spacebot_barrel.cfg",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_spacebot_cup/config.txt",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_rl/_finalfeature_gpu/1/config.txt",
+		"/home/stfn/dev/hf_mc/evaluations/scale_invariance_resized/train_2/_finalfeature_gpu/1/config.txt",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_5/_finalfeature/1/config.txt",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_7/1_sxxyy_dvalrelscale/check/4/config.txt",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_5/_finalfeature_gpu/2/config.txt",
+		"/home/stfn/dev/hf_mc/evaluations/rewrite/train_5/_finalfeature_gpu/1/config.txt"
 	],
 	"find":
 	{
@@ -249,53 +383,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"addcoo",
-			"cout",
-			"1000",
-			"caminfo_K",
-			"pcl::console::print_info",
-			"debug_print",
-			"candidates",
-			"harmony_sea",
-			"run",
-			"err",
-			"cout",
-			"aligner->",
-			"infi",
-			"save",
-			"ros",
-			"aligner2",
-			"servi",
-			"detection2d",
-			"read_hf_mc_candidates",
+			"class_id",
+			"[4]",
+			"max_",
+			"Candidate",
+			"candidate",
+			"matching_cluster_model_name",
+			"matching_cluster_model",
+			"name",
 			"model",
-			"cout",
-			"x",
-			"cols",
-			"width",
-			"cout",
-			"x2",
-			"x1",
-			"depth_img",
-			"initial_sca",
-			"initial_scale",
-			"resize",
-			"detection_cloud",
-			"addsp",
-			"remove",
-			"x",
-			"std::",
-			"extract_hypothesis_cluster_crop",
-			"extract_hypothesis_cluster_radius",
-			"pub_detection_markers",
-			";\n",
-			"rgb_msg->header",
-			" =",
-			"GODDetection",
-			"Detect",
+			"boundingb",
+			"class_id",
+			"candidates",
+			"cand.",
+			"bb",
+			"candidates",
+			"candidates[candNr]",
+			"models",
+			"mo",
+			"Candidate ",
+			"Candidate cand",
+			"class_id",
+			"adapHalfKwidth",
+			"candidates",
+			"pRNG",
+			"cand.c_",
+			"c_",
+			"Candidate",
+			"cand_y",
+			"cand_x",
+			"candidate",
+			"x_",
+			"y_",
+			"se",
+			"seed",
+			"se",
+			"seed",
+			"boundingboxes[candNr]",
+			"max_position",
+			"candidates",
+			"backproj_mask",
+			"do_sym",
+			"candida",
+			"backproj_mask_smooth",
+			"backproj_mask_",
+			"do_bpr_",
+			"get_mo",
+			"const ",
+			"ModelEntry",
+			"string",
+			"id",
+			"GODDetectionParams",
+			"model_db",
+			"vimga",
+			"vimg",
+			"PATH_SEP",
+			"de",
+			"De",
+			"depth",
+			"forest_path",
+			"crd",
 			"detect",
-			"	\n",
-			"0"
+			"crDetect",
+			"CRForest",
+			"crForest",
+			"use_labels_",
+			"detectp",
+			"prob_threshold",
+			"candidates",
+			"detectpe",
+			"detec",
+			"godde",
+			" = 20",
+			"kernel_vote = 20",
+			" = 20",
+			"voteco",
+			"params->",
+			"votecol",
+			"depth_img",
+			"votecol",
+			"tbb",
+			"job",
+			"j",
+			"job",
+			"max_height",
+			"max_width",
+			"bb",
+			"scn",
+			"params",
+			"max_c",
+			"scn",
+			"scales",
+			"[scNr]",
+			"scn",
+			"fullas",
+			"scale",
+			"Scale",
+			"scale",
+			"vvImgAssign",
+			"scales",
+			"image_scale",
+			"isntanz",
+			"nla",
+			"number_of_trees",
+			"DetectionParams",
+			"num_trees",
+			"nlabels",
+			"GlobalParams",
+			"Singleton",
+			"count",
+			"COUNT",
+			"max_can",
+			"initial_scale",
+			"path",
+			"forest_",
+			"forest_path",
+			"off_trees",
+			"markers",
+			"scale",
+			"scale_t",
+			"deb",
+			"re",
+			"relea",
+			"class_map",
+			"class_id",
+			"class_st",
+			"nla",
+			"vImageIDs",
+			"r_scale"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -313,268 +528,8 @@
 	"groups":
 	[
 		{
-			"selected": 6,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "src/detect_with_pose_service.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5835,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4637,
-								4637
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 2320.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "nodes/detector.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5309,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3517,
-								3517
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1385.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/home/stfn/dev/hf_mc/evaluations/rewrite/detector/CRForest-Detector.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 28055,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10806,
-								10806
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 5125.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "test/aligner_fitness_checker.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9218,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								287,
-								287
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "launch/detection_service.launch",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 450,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/XML/XML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "CMakeLists.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7934,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4729,
-								4729
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CMake/CMake.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1938.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "test/aligner_optimizer_pso.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 203,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								139,
-								139
-							]
-						],
-						"settings":
-						{
-							"auto_complete": false,
-							"syntax": "Packages/Python/Python.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "include/GODAlignment.hpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1803,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								339,
-								339
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 306.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "src/GODAlignment.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8708,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								406,
-								406
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -609,9 +564,17 @@
 		]
 	},
 	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 112.0
+	},
 	"output.find_results":
 	{
 		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 112.0
 	},
 	"project": "stfn_object_detector.sublime-project",
 	"replace":
@@ -637,11 +600,11 @@
 	},
 	"select_symbol":
 	{
-		"height": 0.0,
+		"height": 392.0,
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 392.0
 	},
 	"selected_group": 0,
 	"settings":
@@ -651,7 +614,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 275.0,
+	"side_bar_width": 343.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

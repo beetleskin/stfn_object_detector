@@ -1,37 +1,58 @@
-#ifndef MODELDBSTUF
-#define MODELDBSTUF
+#pragma once
 
+#include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
-using namespace std;
+#include <ros/ros.h>
+
 
 
 struct ModelEntry {
-	const int id;
-	const string name;
-	const float radius;
-	const float threshold_truepositive;
-	const float threshold_consideration;
-	const string pcd_model_file;
-	ModelEntry(int id, string name, float radius, float threshold_truepositive, float threshold_consideration, const string pcd_model_file) : 
-		id(id), name(name), radius(radius), threshold_truepositive(threshold_truepositive), threshold_consideration(threshold_consideration), pcd_model_file(pcd_model_file) {}
+	std::string class_name;
+	float radius;
+	float threshold_truepositive;
+	float threshold_consideration;
+	std::string pcd_model_file;
+	ModelEntry(){};
+	ModelEntry(std::string class_name, float radius, float threshold_truepositive, float threshold_consideration, const std::string pcd_model_file) : 
+		class_name(class_name), radius(radius), threshold_truepositive(threshold_truepositive), threshold_consideration(threshold_consideration), pcd_model_file(pcd_model_file) {}
 };
 
 
 class ModelDBStub {
 public:
-	ModelDBStub() {
-		models.push_back(ModelEntry(0, "soda_can", 0.1, 0.5, 0.25, "/home/stfn/testdata/can_1_cloud.pcd"));
-		models.push_back(ModelEntry(1, "tissue_can", 0.15, 0.7, 0.35, ""));
+	typedef std::shared_ptr<ModelDBStub> Ptr;
+	typedef std::shared_ptr<ModelDBStub const> ConstPtr;
+
+	static ModelDBStub::Ptr get() {
+		static ModelDBStub::Ptr instance(new ModelDBStub);
+		return instance;
 	}
 
-	const ModelEntry & get_model_by_id(int id) const {
-		return models[id];
+	const ModelEntry & get_model(const std::string & class_name) {
+		return models[class_name];
 	}
+
+protected:
+	ModelDBStub() {
+		std::vector<std::string> model_class_names;
+		ros::param::get("~models", model_class_names);
+
+
+		for (int i = 0; i < model_class_names.size(); ++i) {
+			std::string class_name = model_class_names[i];
+			int radius = -1;
+			float threshold_truepositive = -1;
+			float threshold_consideration = -1;
+			std::string pcd_model_file = "";
+
+			models[class_name] = ModelEntry( class_name, radius, threshold_truepositive, threshold_consideration, pcd_model_file);
+		}
+	}
+
 
 private:
-	std::vector<ModelEntry> models;
+	std::map<std::string, ModelEntry> models;
 };
-
-#endif

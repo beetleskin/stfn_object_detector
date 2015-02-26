@@ -1,3 +1,4 @@
+#include "Candidate.hpp"
 #include "ModelDBStub.hpp"
 
 #include <opencv2/core/core.hpp>
@@ -9,7 +10,7 @@
 
 #include <tf/transform_listener.h>
 
-
+#include <map>
 #include <memory>
 
 using namespace std;
@@ -23,7 +24,7 @@ using namespace std;
 struct DetectionClusterPoint {
 	PCL_ADD_POINT4D; 
 	float confidence;
-	int class_id;
+	int cluster_id;
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 } EIGEN_ALIGN16;
 
@@ -32,7 +33,7 @@ POINT_CLOUD_REGISTER_POINT_STRUCT (DetectionClusterPoint,
 	(float, y, y)
 	(float, z, z)
 	(float, confidence, confidence)
-	(int, class_id, class_id)
+	(int, cluster_id, cluster_id)
 )
 //PCL_INSTANTIATE(OctreePointCloudSearch, DetectionClusterPoint)
 typedef pcl::PointXYZRGB PointT;
@@ -46,7 +47,7 @@ public:
 	typedef shared_ptr<GODMapping const> ConstPtr;
 	GODMapping();
 	~GODMapping();
-	void update(cv::Mat &depth_img, PointCloudT::Ptr &cloud, vector<vector<float> > &candidates, vector<vector<cv::Point2f> > &boundingboxes);
+	void update(cv::Mat &depth_img, PointCloudT::Ptr &cloud, vector<Candidate> &candidates);
 	void merge_clusters(DetectionClusterPoint &query_cluster, DetectionClusterPoint &persistent_cluster);
 	void add_cluster(DetectionClusterPoint &query_cluster);
 	void lookup_cam_transform(ros::Time &t, Eigen::Affine3d eigen_transform);
@@ -56,5 +57,7 @@ private:
 	pcl::PointCloud<DetectionClusterPoint>::Ptr detection_cloud;
 	shared_ptr<pcl::visualization::PCLVisualizer> visu;
 	tf::TransformListener listener;
-	ModelDBStub model_db;
+	ModelDBStub::Ptr model_db_ptr;
+	map<int, string> cluster_model_map;
+	int cluster_count;
 };

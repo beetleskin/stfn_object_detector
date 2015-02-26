@@ -327,7 +327,6 @@ if __name__ == '__main__':
 
 		# init config file
 		config_file = open(db_model_base_path + os.sep + object_id + ".cfg",'w')
-		config_file.write("%d 1\n" % len(object_patches))
 
 		# write image and config line
 		for i, (rgb, depth) in enumerate(object_patches):
@@ -359,7 +358,6 @@ if __name__ == '__main__':
 
 		# init config file
 		config_file = open(db_model_base_path + os.sep + scene_id + ".cfg",'w')
-		config_file.write("%d 1\n" % len(scene_images))
 
 		# write image and config line
 		for i, (rgb, depth) in enumerate(scene_images):

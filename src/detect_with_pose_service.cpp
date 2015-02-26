@@ -1,3 +1,4 @@
+#include "Candidate.hpp"
 #include "GODAlignment.hpp"
 #include "GODDetection.hpp"
 #include "myutils.hpp"
@@ -98,9 +99,8 @@ public:
 		// run the full detection (2D)
 
 		ROS_INFO("starting HRF detection ...");
-		vector<vector<float> > candidates;
-		vector<vector<cv::Point2f> > boundingboxes;
-		detector->detect(rgb_image->image, depth_image->image, candidates, boundingboxes);
+		vector<Candidate> candidates;
+		detector->detect(rgb_image->image, depth_image->image, candidates);
 		ROS_INFO("found %d detection candidates", (int)candidates.size());
 
 
@@ -118,13 +118,14 @@ public:
 
 		// align each 2D detection
 		for (int i = 0; i < candidates.size(); ++i) {
+			const Candidate &cand = candidates[i];
 
 			// TODO: regard and handle model ID from the request
-			if(candidates[i][4] != 0)
+			if(cand.class_id != 0)
 				continue;
 
 			PointCloudT::Ptr cluster_cloud(new PointCloudT());
-			pcl::PointXYZ cluster_center = aligner->extract_hypothesis_cluster_radius(cluster_cloud, candidates[i][1], candidates[i][2]);
+			pcl::PointXYZ cluster_center = aligner->extract_hypothesis_cluster_radius(cluster_cloud, cand.center.x, cand.center.y);
 			
 			if (cluster_cloud->empty()) {
 				ROS_INFO("\tcluster empty ... aborting");
@@ -154,8 +155,8 @@ public:
 
 			// generate detection response
 			stfn_object_detector::Detection3D detection;
-			detection.model_id = candidates[i][4];
-			detection.confidence = candidates[i][0];
+			detection.model_id = cand.class_id;
+			detection.confidence = cand.confidence;
 			tf::poseEigenToMsg(object_cam_transform, detection.pose);
 			res.detections.detections.push_back(detection);
 			

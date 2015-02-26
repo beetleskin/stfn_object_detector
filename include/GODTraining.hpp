@@ -1,11 +1,12 @@
-#include "CRForestDetector.hpp"
+#pragma once
+
+#include "GODDetectionParams.hpp"
 #include "CRForest.hpp"
 
 #include <ros/ros.h>
 
 #include <opencv2/core/core.hpp>
-
-using namespace std;
+#include <opencv2/highgui/highgui.hpp>
 
 
 
@@ -17,11 +18,9 @@ public:
 	~GODTraining();
 	void initTraining();
 	void train();
-	void load_traindata(CRPatch &Train, CvRNG *pRNG);
+	std::map<std::string, int> load_traindata(CRPatch &Train, CvRNG *pRNG);
 
 private:
-	CRForest::Ptr crForest;
-	CRForestDetector::Ptr crDetect;
-	float initial_scale;
-	float nlabels;
+	GODDetectionParams::Ptr params;
+	CRForest::Ptr forest_ptr;
 };
