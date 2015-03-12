@@ -18,7 +18,7 @@ public:
 	~GODTraining();
 	void initTraining();
 	void train();
-	std::map<std::string, int> load_traindata(CRPatch &Train, CvRNG *pRNG);
+	std::vector<int> load_traindata(CRPatch &Train, CvRNG *pRNG);
 
 private:
 	GODDetectionParams::Ptr params;

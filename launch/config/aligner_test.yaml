@@ -1,15 +1,4 @@
-### opti_result_hs_2015_02_01_17_49.txt
-# very slow, succesful in train, 1/5 OK in rl
-
-#aligner_numberOfSamples: 14.783710567
-#aligner_correspondenceRandomness: 97.126584389
-#aligner_similarityThreshold: 0.035776006304
-#aligner_maxCorrespondenceDistanceMultiplier: 0.8518265533
-#aligner_inlierFraction: 0.347938133184
-#aligner_maximumIterations: 290230.496291
-#aligner_leafSize: 0.01
-#aligner_nest_radius: 0.029408131307
-#aligner_fest_radius: 0.041150700260
+model_file: /home/stfn/recognition_database/models/can/can_model.pcd
 
 
 ### opti_result_hs_2015_02_01_17_49.txt

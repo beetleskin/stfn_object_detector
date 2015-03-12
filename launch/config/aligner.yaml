@@ -1,3 +1,5 @@
+model_file: /home/recognition_database/models/can_model.pcd
+
 aligner_numberOfSamples: 3.737666358579453
 aligner_correspondenceRandomness: 88.35372467032404
 aligner_similarityThreshold: 0.47196951656097363

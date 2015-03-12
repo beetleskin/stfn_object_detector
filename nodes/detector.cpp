@@ -67,6 +67,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr &rgb_msg, const sensor_msgs:
 		return;
 	}
 
+
+	// convert images
 	cv_bridge::CvImagePtr rgb_cv_ptr, depth_cv_ptr;
 	try {
 		rgb_cv_ptr = cv_bridge::toCvCopy(rgb_msg, sensor_msgs::image_encodings::BGR8);

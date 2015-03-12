@@ -18,14 +18,12 @@ link_directories(${OpenCV_LIBRARY_DIRS})
 set(EIGEN_INCLUDE_DIRS "/home/stfn/libs/eigen3.2.1")
 
 # hf_mc
-set(DHF_DIR "/home/stfn/dev/hf_mc/evaluations/rewrite/detector")
-#file(GLOB DHF_SOURCES ${DHF_DIR}/*.cpp)
 set(DHF_SOURCES 
-	${DHF_DIR}/CRForest.cpp
-	${DHF_DIR}/CRForestDetector.cpp
-	${DHF_DIR}/CRPatch.cpp
-	${DHF_DIR}/CRTree.cpp
-	${DHF_DIR}/HoG.cpp
+	src/detector/CRForest.cpp
+	src/detector/CRForestDetector.cpp
+	src/detector/CRPatch.cpp
+	src/detector/CRTree.cpp
+	src/detector/HoG.cpp
 	src/GODImageMemory.cpp
 )
 
@@ -144,6 +142,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(include)
+include_directories(include/detector)
 include_directories(
 #	${PCL_INCLUDE_DIRS}
 	${EIGEN_INCLUDE_DIRS}

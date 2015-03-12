@@ -36,7 +36,7 @@ public:
 		depth_sub.reset(new image_transport::SubscriberFilter);
 		sync.reset(new message_filters::Synchronizer<MySyncPolicy>(MySyncPolicy(10), *rgb_sub, *depth_sub));
 		sync->registerCallback(bind(&DetectWithPoseService::imageCallback, this, _1, _2 ));
-		tmp_cloud_pub = nh.advertise<pcl::PointCloud<pcl::PointXYZ> >("tmp_cloud", 10);
+		model_aligned_debug_pub = nh.advertise<pcl::PointCloud<pcl::PointXYZ> >("tmp_cloud", 10);
 
 
 		//
@@ -56,20 +56,15 @@ public:
 		} else {
 			camera_info_msg = *camera_info_msg_ptr;
 		}
+
 		// model file
-		std::string model_file = "/home/stfn/testdata/can_1_cloud.pcd";
+		// TODO: For more than one model to align, this needs to be adapted. Right now only one model is loaded.
+		std::string model_file = "/home/recognition_database/models/can_model.pcd";
 		ros::param::get("~model_file", model_file);
 
 		// init
 		aligner.reset(new GODAlignment(camera_info_msg.K));
 		aligner->loadModel(model_file);
-
-
-		//
-		// 
-
-
-
 	};
 
 
@@ -120,10 +115,12 @@ public:
 		for (int i = 0; i < candidates.size(); ++i) {
 			const Candidate &cand = candidates[i];
 
-			// TODO: regard and handle model ID from the request
-			if(cand.class_id != 0)
+
+			// only examine candidates that belong to the requested model id resp. class name
+			if(cand.class_name != req.model_id)
 				continue;
 
+			// extract a subcloud around the candidates center
 			PointCloudT::Ptr cluster_cloud(new PointCloudT());
 			pcl::PointXYZ cluster_center = aligner->extract_hypothesis_cluster_radius(cluster_cloud, cand.center.x, cand.center.y);
 			
@@ -133,7 +130,10 @@ public:
 			}
 
 
+
+			//
 			// model-cluster alignment
+
 			PointCloudT::Ptr model_aligned(new PointCloudT);
 			Eigen::Matrix4f object_cam_transform_matrix;
 			bool success = aligner->align_cloud_to_model(cluster_cloud, object_cam_transform_matrix, model_aligned);
@@ -151,7 +151,7 @@ public:
 			// publish aligned model as pointcloud
 			model_aligned->header.stamp = rgb_image->header.stamp.toNSec()/1e3;
 			model_aligned->header.frame_id = rgb_image->header.frame_id;
-			tmp_cloud_pub.publish(*model_aligned);
+			model_aligned_debug_pub.publish(*model_aligned);
 
 			// generate detection response
 			stfn_object_detector::Detection3D detection;
@@ -160,6 +160,8 @@ public:
 			tf::poseEigenToMsg(object_cam_transform, detection.pose);
 			res.detections.detections.push_back(detection);
 			
+
+			// TODO: for now only the candidate with the highest confidence is examined for alignment
 			break;
 		}
 
@@ -211,7 +213,7 @@ private:
 	shared_ptr<image_transport::SubscriberFilter> rgb_sub;
 	shared_ptr<image_transport::SubscriberFilter> depth_sub;
 	shared_ptr<message_filters::Synchronizer<MySyncPolicy> > sync;
-	ros::Publisher tmp_cloud_pub;
+	ros::Publisher model_aligned_debug_pub;
 };
 
 

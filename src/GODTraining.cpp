@@ -70,13 +70,15 @@ void GODTraining::initTraining() {
 
 
 // Extract patches from training data
-std::map<std::string, int> GODTraining::load_traindata(CRPatch &Train, CvRNG *pRNG) {
+std::vector<int> GODTraining::load_traindata(CRPatch &Train, CvRNG *pRNG) {
 
 	//
 	// get parameters from world model
 	std::string database_path = params->database_path;
 	float image_scale = params->image_scale;
 	vector<string> models = params->models;
+	cv::Size patch_size = params->patch_size;
+
 
 	//
 	// get additional params from ROS
@@ -86,6 +88,7 @@ std::map<std::string, int> GODTraining::load_traindata(CRPatch &Train, CvRNG *pR
 	int subsample_backgrounds = -1;
 	int patches_per_model_image = 100;
 	int patches_per_background_image = 250;
+
 	
 	ros::param::get("~backgrounds", backgrounds);
 	ros::param::get("~subsample_models", subsample_models);
@@ -96,7 +99,8 @@ std::map<std::string, int> GODTraining::load_traindata(CRPatch &Train, CvRNG *pR
 	std::map<std::string, vector<string> > image_files;
 	std::map<std::string, vector<cv::Rect> > object_bbs;
 	std::map<std::string, vector<cv::Point> > object_centers;
-	std::map<std::string, int> class_map;
+	std::vector<int> class_structure;
+	std::vector<std::string> class_order;
 
 
 
@@ -122,7 +126,8 @@ std::map<std::string, int> GODTraining::load_traindata(CRPatch &Train, CvRNG *pR
 		}
 
 		// assign internal class id
-		class_map[model_key] = i+1;
+		class_structure.push_back(i+1);
+		class_order.push_back(model_key);
 	}
 
 	// subsample models
@@ -156,19 +161,18 @@ std::map<std::string, int> GODTraining::load_traindata(CRPatch &Train, CvRNG *pR
 			ROS_ERROR("Could not open config file: %s", scene_config_file.c_str());
 		}
 
-		// assign internal class id
-		class_map[background_key] = 0;
+		// assign internal class id (0 for background!)
+		class_structure.push_back(0);
+		class_order.push_back(background_key);
 	}
 
 	// subsample background
-	if(subsample_models) {
+	if(subsample_backgrounds) {
 		for (int i = 0; i < backgrounds.size(); ++i) {
 			std::string background_key = backgrounds[i];
-			while(image_files[background_key].size() > subsample_models) {
+			while(image_files[background_key].size() > subsample_backgrounds) {
 				int idx_to_remove = (int) (cvRandReal(pRNG) * image_files[background_key].size());
 				image_files[background_key].erase(image_files[background_key].begin() + idx_to_remove);
-				//object_bbs[background_key].erase(object_bbs[background_key].begin() + idx_to_remove);
-				//object_centers[background_key].erase(object_centers[background_key].begin() + idx_to_remove);
 			}
 		}
 	}
@@ -181,10 +185,12 @@ std::map<std::string, int> GODTraining::load_traindata(CRPatch &Train, CvRNG *pR
 
 	//
 	// extract patches from the images
-	for ( const auto &pair : class_map ) {
-		std::string class_key = pair.first;
-		int class_id = pair.second;
-		cout << pair.first << " " << pair.second << endl;
+	for (int class_label = 0; class_label < class_order.size(); ++class_label) {
+		const std::string &class_key = class_order[class_label];
+		int class_id = class_structure[class_label];
+
+
+		ROS_INFO("Loading images for [%s] ...", class_key.c_str());
 
 
 		for (int i = 0; i < image_files[class_key].size(); ++i) {
@@ -210,38 +216,46 @@ std::map<std::string, int> GODTraining::load_traindata(CRPatch &Train, CvRNG *pR
 			// is going to be IPL_DEPTH_16U
 			depth_img = imread(img_depth_file_name, CV_LOAD_IMAGE_ANYDEPTH);
 
-			if (!img.data) {
-				cout << "Could not load image file: " << img_file_name << endl;
-				exit(-1);
+			// check if images are there
+			if (!img.data ) {
+				ROS_ERROR("Could not load image file: %s", img_file_name.c_str());
+				ros::shutdown();
 			} else if (!depth_img.data) {
-				cout << "Could not load image file: " << img_depth_file_name << endl;
-				exit(-1);
+				ROS_ERROR("Could not load image file: %s", img_depth_file_name.c_str());
+				ros::shutdown();
 			}
+
+			// check image size
+			if(img.cols < patch_size.width*2 || img.rows < patch_size.height*2) {
+				ROS_ERROR("Train image is to small: %s", img_file_name.c_str());
+				ros::shutdown();
+			} 
 
 			// downscale rgb and depth image
 			resize(img, img, Size(), image_scale, image_scale, CV_INTER_LINEAR);
 			resize(depth_img, depth_img, Size(), image_scale, image_scale, CV_INTER_NN);
 
+
 			if(class_id != 0) {
+				// Extract positive training patches (model patches)
+
 				cv::Point &center = object_centers[class_key][i];
+				// scale the object center such that it fits the downscaled image
 				center.x *= image_scale;
 				center.y *= image_scale;
-
-				Train.extractPatches(img, depth_img, patches_per_model_image, class_id, i, center);
+				Train.extractPatches(img, depth_img, patches_per_model_image, class_label, i, center);
 			} else {
-				cv::Point center;
-				Train.extractPatches(img, depth_img, patches_per_background_image, class_id, i , center);
-			}
-			
+				// Extract negative training patches (background patches)
 
-			// Extract positive training patches
-			
+				cv::Point center;
+				Train.extractPatches(img, depth_img, patches_per_background_image, class_label, i , center);
+			}
 		}
 
     }
 
 
-    return class_map;
+    return class_structure;
 }
 
 
@@ -256,33 +270,23 @@ void GODTraining::train() {
 
 	//
 	// get additional params from ROS
-	// create random seed
 	int tree_max_depth = 20;
 	ros::param::get("~tree_max_depth", tree_max_depth);
 
 
+	//
 	// Init training data
 	CRPatch Train(&cvRNG, patch_size);
 
+
+	//
 	// Extract training patches
-	std::map<std::string, int> class_map = load_traindata(Train, &cvRNG);
+	std::vector<int> class_structure = load_traindata(Train, &cvRNG);
 
 
-	// dispensable params ...
-	std::vector<int> class_structure;
-	bool has_background = false;
-	for ( const auto &pair : class_map ) {
-		int class_id = pair.second;
-		if(class_id != 0)
-			class_structure.push_back(pair.second);
-		else
-			has_background = true;
-	}
-	if(has_background)
-		class_structure.push_back(0);
-
-
+	//
 	// Train forest
+	ROS_INFO("Starting training ...");
 	forest_ptr->trainForest(20, tree_max_depth, &cvRNG, Train, 2000, class_structure);
 
 
@@ -290,13 +294,11 @@ void GODTraining::train() {
 	for (unsigned int trNr = 0; trNr < forest_ptr->getTrees().size(); ++trNr) {
 		LeafNode *leaf = forest_ptr->getTrees()[trNr]->getLeaf();
 		LeafNode *ptLN = &leaf[0];
-		vector<int> class_ids;
-		forest_ptr->getTrees()[trNr]->getClassId(class_ids);
 
 		for (unsigned int lNr = 0 ; lNr < forest_ptr->getTrees()[trNr]->getNumLeaf(); lNr++, ++ptLN) {
 			ptLN->eL = 0;
 			ptLN->fL = 0;
-			ptLN->vLabelDistrib.resize(class_ids.size(), 0);
+			ptLN->vLabelDistrib.resize(class_structure.size(), 0);
 		}
 	}
 

@@ -56,6 +56,7 @@ void GODDetection::detect(cv::Mat &rgb_img, cv::Mat &depth_img, vector<Candidate
 	//
 	// detect (multithread)
 	vector<vector<Candidate> > temp_candidates(params->nlabels - 1);
+	GODImageMemory::hough_space.resize(params->nlabels - 1);
 	for (unsigned int cNr = 0; cNr < params->nlabels - 1; cNr++) {
 		float threshold_this_class = params->threshold_hierarchy / float(params->nlabels);
 		auto job_func = bind(&CRForestDetector::detectPyramidMR, crDetect, ref(temp_candidates[cNr]), ref(depth_small), cNr, threshold_this_class);
@@ -120,11 +121,12 @@ void GODDetection::detect(cv::Mat &rgb_img, cv::Mat &depth_img, vector<Candidate
 
 #if 1
 	// show the hough space
-	for (int i = 0; i < params->nlabels-1; i++) {
+	for (int i = 0; i < params->nlabels -1; i++) {
 		cv::Mat hough = GODImageMemory::hough_space[i].clone();
 		cv::normalize(hough, hough, 0, 1.0, cv::NORM_MINMAX);
-		string window_name = "hough [" + model_names[i] + "]";
-		cv::imshow(window_name, hough);
+		stringstream ss;
+		ss << "hough [" << i << "]";
+		cv::imshow(ss.str(), hough);
 	}
 
 
@@ -132,7 +134,8 @@ void GODDetection::detect(cv::Mat &rgb_img, cv::Mat &depth_img, vector<Candidate
 	for (size_t candNr = 0; candNr < candidates.size(); candNr++) {
 
 		Candidate &cand = candidates[candNr];
-		rectangle(rgb_img, cand.bb[0], cand.bb[1], Scalar(cand.class_id*255, 0, 255), 3);
+		if(cand.confidence > 0.5)
+			rectangle(rgb_img, cand.bb[0], cand.bb[1], Scalar(cand.class_id*255, 0, 255), 3);
 
 	}
 	cv::imshow("detections", rgb_img);

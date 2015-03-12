@@ -3,7 +3,6 @@
 		<node pkg="stfn_object_detector" type="ros_detector" name="dhf_detector" output="screen" >
 			<rosparam file="$(find stfn_object_detector)/launch/config/detector.yaml" command="load"/>
 			<rosparam file="$(find stfn_object_detector)/launch/config/trainer.yaml" command="load"/>
-			<rosparam file="$(find stfn_object_detector)/launch/config/aligner.yaml" command="load"/>
 			<remap from="/camera/rgb/image" to="/camera/rgb/image_rect_color"/>
 			<remap from="/camera/depth/image" to="/camera/depth_registered/image_raw"/>
 		</node>

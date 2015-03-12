@@ -228,12 +228,12 @@ if __name__ == '__main__':
 	#
 	## put the tain and thest data in here
 	object_bags = {
-		'barrel': "spacebot_barrel.bag",
-		'block': "spacebot_block.bag",
+		'can': "can.bag",
+		'tissue_can': "tissue_can.bag",
 	}
 	scene_bags = {
-		'spacebot_bg': "spacebot_background.bag",
-		'spacebot_test': "spacebot_testdata.bag"
+		#'spacebot_bg': "spacebot_background.bag",
+		#'spacebot_test': "spacebot_testdata.bag"
 	}
 	
 

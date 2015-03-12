@@ -10,7 +10,7 @@ patches_per_background_image: 250
 
 database_path: '/home/stfn/recognition_database'
 tree_file_prefix: 'treetable_'
-forest_id: 'huiii'
+forest_id: 'test'
 
-models: ['barrel','block']
+models: ['can','tissue_can']
 backgrounds: ['spacebot_bg']
